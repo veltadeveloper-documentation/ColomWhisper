@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F5F1E5">
+<meta name="description" content="ColomWhisper — an advertising studio for companies and small businesses. Quiet strategy, sharp creative, measurable echoes.">
+<title>ColomWhisper — Advertising that whispers, and echoes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+/* ============ tokens ============ */
+:root{
+  --paper:#F5F1E5; --paper-2:#ECE6D6;
+  --ink:#172A1D; --forest:#2E4B37; --forest-2:#203729; --forest-3:#0F1C13;
+  --moss:#4F6B58; --sage:#8FA588; --mist:#CBD5BF;
+  --gold:#B3873B; --gold-deep:#8F6A2A;
+  --err:#C4693E;
+  --line:rgba(23,42,29,.16); --line-l:rgba(237,233,220,.18);
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Instrument Sans','Helvetica Neue',Arial,sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:400 1rem/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--gold);color:var(--ink)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+a{color:inherit}
+section{scroll-margin-top:88px}
+body::after{content:"";position:fixed;inset:0;z-index:2000;pointer-events:none;opacity:.045;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='180' height='180' filter='url(%23n)' opacity='.55'/></svg>")}
+
+.container{width:min(1180px,calc(100% - 48px));margin-inline:auto}
+.section{padding:clamp(88px,11vw,148px) 0}
+.ic{width:15px;height:15px;flex:none}
+
+/* ============ scroll progress / custom cursor ============ */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--gold);z-index:1100}
+#cursorDot,#cursorRing{position:fixed;top:0;left:0;pointer-events:none;opacity:0;transition:opacity .25s}
+#cursorDot{width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:var(--gold);z-index:10001}
+#cursorRing{width:38px;height:38px;margin:-19px 0 0 -19px;z-index:10000}
+#cursorRing span{display:block;width:100%;height:100%;border:1px solid var(--gold);border-radius:50%;opacity:.65;transition:transform .3s var(--ease),opacity .3s}
+#cursorRing.grow span{transform:scale(1.75);opacity:1}
+body.cursor-on{cursor:none}
+body.cursor-on a,body.cursor-on button,body.cursor-on select,body.cursor-on label{cursor:none}
+body.cursor-on input,body.cursor-on textarea{cursor:text}
+body.cursor-on #cursorDot,body.cursor-on #cursorRing{opacity:1}
+body.cursor-hide #cursorDot,body.cursor-hide #cursorRing{opacity:0}
+
+/* ============ nav ============ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:20px 0;transition:padding .35s,background .35s,border-color .35s}
+.nav.scrolled{background:rgba(245,241,229,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 0}
+.nav-inner{width:min(1180px,calc(100% - 48px));margin:0 auto;display:flex;align-items:center;gap:12px}
+.brand{display:inline-flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);transition:color .35s}
+.mark{width:30px;height:30px;flex:none}
+.wordmark{font-family:var(--serif);font-size:1.22rem;font-weight:600;letter-spacing:-.015em;white-space:nowrap}
+.wordmark em{font-style:italic;font-weight:500;color:var(--gold-deep)}
+.nav-links{display:flex;gap:32px;margin-left:auto;list-style:none}
+.nav-links a{font:600 .74rem/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink);opacity:.72;text-decoration:none;padding:7px 0;position:relative;transition:opacity .25s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.nav-links a:hover{opacity:1}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav .btn{margin-left:26px}
+
+/* language switch */
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;margin-left:20px;flex:none}
+.lang-btn{background:transparent;border:0;padding:8px 13px;font:700 .66rem/1 var(--sans);letter-spacing:.12em;color:var(--ink);opacity:.55;cursor:pointer;transition:opacity .25s,background .25s,color .25s}
+.lang-btn:hover{opacity:1}
+.lang-btn.on{background:var(--ink);color:var(--paper);opacity:1}
+body.menu-open .lang{border-color:rgba(237,233,220,.4)}
+body.menu-open .lang-btn{color:var(--mist)}
+body.menu-open .lang-btn.on{background:var(--gold);color:var(--ink)}
+
+.nav-burger{display:none;margin-left:auto;width:46px;height:46px;border:1px solid var(--line);background:transparent;border-radius:50%;flex-direction:column;align-items:center;justify-content:center;gap:7px;cursor:pointer}
+.nav-burger span{display:block;width:20px;height:2px;background:var(--ink);transition:.35s var(--ease)}
+body.menu-open .nav{background:transparent;border-color:transparent;backdrop-filter:none}
+body.menu-open .brand{color:var(--paper)}
+body.menu-open .wordmark em{color:var(--gold)}
+body.menu-open .nav-burger span{background:var(--paper)}
+body.menu-open .nav-burger span:first-child{transform:translateY(4.5px) rotate(45deg)}
+body.menu-open .nav-burger span:last-child{transform:translateY(-4.5px) rotate(-45deg)}
+body.menu-open{overflow:hidden}
+
+.menu{position:fixed;inset:0;z-index:950;background:var(--forest);display:flex;flex-direction:column;justify-content:center;padding:110px 34px 60px;opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility .45s}
+body.menu-open .menu{opacity:1;visibility:visible}
+.menu a{display:flex;align-items:baseline;gap:16px;color:var(--paper);text-decoration:none;font-family:var(--serif);font-size:2rem;font-weight:500;padding:13px 0;border-bottom:1px solid rgba(237,233,220,.14)}
+.menu a small{font:600 .65rem var(--sans);letter-spacing:.22em;color:var(--gold)}
+.menu .menu-mail{margin-top:34px;font-family:var(--sans);font-size:.95rem;border:none;color:var(--mist);padding:0}
+.menu .menu-mail:hover{color:var(--gold)}
+
+/* ============ buttons ============ */
+.btn{display:inline-flex;align-items:center;gap:11px;font:600 .8rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;padding:17px 27px;border-radius:999px;border:1px solid var(--ink);text-decoration:none;cursor:pointer;transition:background .3s,color .3s,border-color .3s,transform .3s var(--ease)}
+.btn .ic{transition:transform .3s var(--ease)}
+.btn-solid{background:var(--ink);color:var(--paper)}
+.btn-solid:hover{background:var(--gold);border-color:var(--gold);color:var(--ink);transform:translateY(-2px)}
+.btn-solid:hover .ic{transform:translateX(4px)}
+.btn-ghost{background:transparent;color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--paper)}
+.btn-gold{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.btn-gold:hover{background:var(--paper);border-color:var(--paper);transform:translateY(-2px)}
+.btn-gold:hover .ic{transform:translateX(4px)}
+.btn-sm{padding:12px 20px;font-size:.7rem}
+.btn.busy{opacity:.65;pointer-events:none}
+
+/* ============ hero ============ */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:hidden;padding:130px 0 150px}
+.hero-scene{position:absolute;inset:0;z-index:1;pointer-events:none}
+#leafCanvas{position:absolute;inset:0;z-index:8;pointer-events:none}
+.layer{position:absolute;left:-6%;width:112%;bottom:0;opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform 1.1s var(--ease)}
+.r1{height:32%;z-index:1;transition-delay:.12s}
+.r2{height:38%;z-index:2;transition-delay:.22s}
+.r3{height:45%;z-index:3;transition-delay:.32s}
+.r4{height:55%;z-index:4;transition-delay:.45s}
+body.loaded .layer{opacity:1;transform:none}
+.layer-in{width:100%;height:100%;will-change:transform}
+.layer svg{display:block;width:100%;height:100%}
+.l-sun{left:auto;right:9%;top:14%;width:120px;height:120px;bottom:auto;transform:translateY(38px);transition-delay:.25s}
+.peak-line{position:absolute;left:auto;right:7%;top:25%;width:220px;z-index:2;bottom:auto;color:var(--ink);opacity:0;transition:opacity 1s 1.5s}
+body.loaded .peak-line{opacity:.5}
+body.loaded .l-sun{transform:none}
+.peak-line path{stroke-dasharray:1;stroke-dashoffset:1;animation:peakDraw 1.8s .95s var(--ease) forwards}
+@keyframes peakDraw{to{stroke-dashoffset:0}}
+
+.hero-inner{position:relative;z-index:10}
+.hero-over{display:flex;align-items:center;gap:12px;font:600 .7rem/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--moss)}
+.hero-over .oc-arc{color:var(--gold);width:26px;height:11px;flex:none}
+.hero-title{font-family:var(--serif);font-weight:500;font-size:clamp(2.6rem,6.6vw,5.4rem);line-height:1.08;letter-spacing:-.02em;margin-top:26px;max-width:12ch}
+.hl{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.04em}
+.hl-in{display:block;transform:translateY(115%);transition:transform 1s var(--ease);transition-delay:var(--d,0s)}
+body.loaded .hl-in{transform:none}
+.hl-it .hl-in{font-style:italic}
+.echo{position:relative;display:inline-block;font-style:italic;color:var(--gold-deep);outline:none}
+.echo::before,.echo::after{content:attr(data-text);position:absolute;left:0;top:0;color:transparent;-webkit-text-stroke:1px var(--gold);opacity:0;pointer-events:none}
+.echo:hover::before,.echo:focus::before{animation:echoOut 1.2s ease-out}
+.echo:hover::after,.echo:focus::after{animation:echoOut 1.2s .18s ease-out}
+@keyframes echoOut{0%{opacity:.75;transform:scale(1)}100%{opacity:0;transform:scale(1.3)}}
+.hero-sub{margin-top:28px;max-width:540px;color:var(--moss);font-size:1.02rem;line-height:1.72}
+.hero-cta{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap}
+.fade-up{opacity:0;transform:translateY(18px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s)}
+body.loaded .fade-up{opacity:1;transform:none}
+.scroll-cue{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);z-index:10;text-align:center;color:var(--paper)}
+.scroll-cue>span{display:block;font:600 .62rem/1 var(--sans);letter-spacing:.28em;text-transform:uppercase;opacity:.85}
+.cue-line{display:block;width:1px;height:54px;margin:12px auto 0;background:rgba(245,241,229,.28);position:relative;overflow:hidden}
+.cue-line::after{content:"";position:absolute;left:0;top:-45%;width:100%;height:45%;background:var(--gold);animation:cueDrop 2.4s var(--ease) infinite}
+@keyframes cueDrop{0%{top:-45%}70%,100%{top:105%}}
+@media(max-width:880px){
+  .l-sun{width:84px;height:84px;top:10%;right:6%}
+  .peak-line{display:none}
+  .scroll-cue{display:none}
+}
+
+/* ============ ticker ============ */
+.ticker{background:var(--ink);color:var(--paper);padding:15px 0;overflow:hidden}
+.ticker-track{display:flex;width:max-content;animation:tickerMove 34s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+@keyframes tickerMove{to{transform:translateX(-50%)}}
+.ticker-group{display:flex;align-items:center;flex:none}
+.tk{padding:0 24px;font:600 .78rem/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
+.tk-leaf{width:13px;height:13px;color:var(--gold);flex:none}
+
+/* ============ section scaffolding ============ */
+.overline{display:flex;align-items:center;gap:12px;font:600 .7rem/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--moss)}
+.oc-arc{width:26px;height:11px;flex:none}
+.sec-title{font-family:var(--serif);font-weight:500;font-size:clamp(2.05rem,4.4vw,3.35rem);line-height:1.06;letter-spacing:-.015em;margin-top:22px;color:var(--ink);max-width:18ch}
+.sec-note{color:var(--moss);max-width:36ch;font-size:.95rem;line-height:1.65}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:44px;margin-bottom:58px;flex-wrap:wrap}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .95s var(--ease),transform .95s var(--ease);transition-delay:var(--d,0s)}
+.reveal.in{opacity:1;transform:none}
+
+/* ============ premise ============ */
+.premise-grid{display:grid;grid-template-columns:1.35fr .85fr;gap:70px;align-items:start}
+.statement{font-family:var(--serif);font-weight:500;font-size:clamp(1.85rem,3.6vw,3.05rem);line-height:1.22;letter-spacing:-.01em}
+.statement .gol{color:var(--gold-deep);font-style:italic}
+.premise-side p{color:var(--moss);font-size:.98rem;line-height:1.78;max-width:46ch}
+.premise-side p+p{margin-top:18px}
+.sig{margin-top:28px;font:600 .7rem var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep)}
+@media(max-width:920px){.premise-grid{grid-template-columns:1fr;gap:42px}}
+
+/* ============ services ============ */
+.services{background:var(--paper-2)}
+.svc{border-top:1px solid var(--line)}
+.svc:last-of-type{border-bottom:1px solid var(--line)}
+.svc-head{display:grid;grid-template-columns:70px 1fr 42px;align-items:center;gap:22px;width:100%;padding:27px 4px;background:none;border:0;text-align:left;cursor:pointer;font-family:inherit}
+.svc-num{font-family:var(--serif);font-style:italic;color:var(--gold-deep);font-size:1.05rem}
+.svc-title{font-family:var(--serif);font-size:clamp(1.3rem,2.4vw,1.8rem);font-weight:500;color:var(--ink)}
+.svc-tag{display:block;font-family:var(--sans);font-size:.85rem;font-weight:400;color:var(--moss);margin-top:5px}
+.svc-toggle{width:40px;height:40px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;background:transparent;color:var(--ink);transition:transform .4s var(--ease),background .3s,color .3s,border-color .3s}
+.svc.open .svc-toggle{background:var(--ink);color:var(--paper);border-color:var(--ink);transform:rotate(45deg)}
+.svc-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s var(--ease)}
+.svc.open .svc-body{grid-template-rows:1fr}
+.svc-inner{overflow:hidden}
+.svc-inner-pad{padding:2px 4px 36px 92px}
+.svc-desc{color:var(--moss);max-width:560px;line-height:1.72;font-size:.97rem}
+.svc-list{list-style:none;display:flex;flex-wrap:wrap;gap:12px 30px;margin-top:20px}
+.svc-list li{display:flex;align-items:center;gap:9px;font-size:.88rem;color:var(--ink)}
+.svc-list .ic{width:12px;height:12px;color:var(--gold-deep)}
+.svc-cta{margin-top:24px;display:inline-flex;align-items:center;gap:9px;font:600 .74rem var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:5px;transition:color .25s}
+.svc-cta .ic{transition:transform .3s var(--ease)}
+.svc-cta:hover{color:var(--gold-deep)}
+.svc-cta:hover .ic{transform:translateX(5px)}
+@media(max-width:700px){
+  .svc-head{grid-template-columns:44px 1fr 42px;gap:14px}
+  .svc-inner-pad{padding:2px 2px 32px 60px}
+}
+
+/* ============ method ============ */
+.method .container{width:min(1020px,calc(100% - 48px))}
+.method-wrap{position:relative;margin-top:6px}
+.method-path{position:absolute;inset:0;overflow:visible;pointer-events:none}
+.p-base{fill:none;stroke:rgba(23,42,29,.22);stroke-width:1.5;stroke-dasharray:3 8;stroke-linecap:round}
+.p-draw{fill:none;stroke:var(--gold);stroke-width:2;stroke-linecap:round}
+.node{fill:var(--paper);stroke:var(--gold);stroke-width:2;transition:fill .5s}
+.node.on{fill:var(--gold)}
+.step{position:relative;padding:44px 0}
+.step-card{position:relative;width:min(430px,47%);opacity:.22;transform:translateY(16px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.step.on .step-card{opacity:1;transform:none}
+.step:nth-of-type(odd) .step-card{margin-right:auto}
+.step:nth-of-type(even) .step-card{margin-left:auto}
+.step-card::after{content:"";position:absolute;top:20px;width:34px;border-top:1px dashed rgba(23,42,29,.3)}
+.step:nth-of-type(odd) .step-card::after{right:-46px}
+.step:nth-of-type(even) .step-card::after{left:-46px}
+.step-phase{font:600 .68rem var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep)}
+.step-title{font-family:var(--serif);font-size:1.85rem;font-weight:500;margin:10px 0 12px;letter-spacing:-.01em}
+.step-card .step-desc{color:var(--moss);font-size:.95rem;line-height:1.72}
+.method-end{text-align:center;margin-top:46px;font-family:var(--serif);font-style:italic;font-size:1.35rem;color:var(--gold-deep)}
+@media(max-width:1020px){.step-card::after{display:none}}
+@media(max-width:860px){
+  .step{padding:30px 0 30px 58px}
+  .step-card{width:100%}
+  .method-end{text-align:left;padding-left:58px}
+}
+
+/* ============ results ============ */
+.results{background:var(--forest)}
+.results .overline{color:var(--mist)}
+.results .oc-arc{color:var(--gold)}
+.results .sec-title{color:var(--paper)}
+.results .sec-note{color:var(--mist)}
+.stat-row{display:flex;align-items:baseline;justify-content:space-between;gap:36px;padding:30px 4px;border-top:1px solid var(--line-l)}
+.stat-row:last-of-type{border-bottom:1px solid var(--line-l)}
+.stat-num{font-family:var(--serif);font-weight:500;color:var(--gold);font-size:clamp(2.6rem,6.5vw,5rem);line-height:1;letter-spacing:-.02em;white-space:nowrap}
+.stat-label{color:var(--mist);font-size:.95rem;line-height:1.6;max-width:380px;text-align:right}
+.evidence{margin-top:84px}
+.ev-title{font:600 .68rem var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.ev-row{display:grid;grid-template-columns:250px 1fr auto;gap:28px;align-items:baseline;padding:25px 4px;border-top:1px solid var(--line-l)}
+.ev-row:last-of-type{border-bottom:1px solid var(--line-l)}
+.ev-row h3{font-family:var(--serif);font-weight:500;font-size:1.2rem;color:var(--paper)}
+.ev-row p{color:var(--mist);font-size:.92rem;line-height:1.6}
+.ev-res{font-weight:600;font-size:.88rem;color:var(--gold);white-space:nowrap}
+@media(max-width:760px){
+  .stat-row{flex-direction:column;gap:10px}
+  .stat-label{text-align:left}
+  .ev-row{grid-template-columns:1fr;gap:8px}
+  .ev-res{white-space:normal}
+}
+
+/* ============ testimonials ============ */
+.t-block{max-width:860px}
+.t-quote{width:58px;height:44px;color:var(--gold);margin-bottom:26px}
+.t-track{display:grid}
+.t-slide{grid-area:1/1;opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease);pointer-events:none}
+.t-slide.active{opacity:1;transform:none;pointer-events:auto}
+.t-slide blockquote{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(1.3rem,2.6vw,1.95rem);line-height:1.42}
+figcaption{margin-top:26px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+figcaption strong{font-family:var(--serif);font-weight:600;font-size:1rem}
+figcaption span{font:600 .66rem var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--moss)}
+.t-ctrl{margin-top:38px;display:flex;align-items:center;gap:18px}
+.t-btn{width:46px;height:46px;border-radius:50%;border:1px solid var(--ink);background:transparent;color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:background .3s,color .3s}
+.t-btn:hover{background:var(--ink);color:var(--paper)}
+.t-count{font-family:var(--serif);font-style:italic;color:var(--gold-deep)}
+
+/* ============ engagements ============ */
+.engage{background:var(--paper-2)}
+.tier-row{border-top:1px solid var(--line);padding:34px 4px}
+.tier-row:last-of-type{border-bottom:1px solid var(--line)}
+.tier-top{display:flex;align-items:baseline;gap:16px}
+.tier-name{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(1.4rem,2.6vw,1.9rem)}
+.tier-badge{font:600 .6rem var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep);border:1px solid var(--gold);padding:5px 11px;border-radius:99px;white-space:nowrap;transform:translateY(-3px)}
+.tier-dots{flex:1;border-bottom:2px dotted rgba(23,42,29,.28);transform:translateY(-4px);min-width:36px}
+.tier-price{font-family:var(--serif);font-weight:500;font-size:clamp(1.2rem,2.4vw,1.7rem);color:var(--gold-deep);white-space:nowrap}
+.tier-price .per{font:400 .72rem var(--sans);color:var(--moss);margin-left:3px}
+.tier-desc{margin-top:14px;color:var(--moss);max-width:640px;font-size:.96rem;line-height:1.72}
+.tier-cta{margin-top:18px;display:inline-flex;align-items:center;gap:9px;font:600 .74rem var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:5px;transition:color .25s}
+.tier-cta .ic{transition:transform .3s var(--ease)}
+.tier-cta:hover{color:var(--gold-deep)}
+.tier-cta:hover .ic{transform:translateX(5px)}
+.tier-note{margin-top:32px;font-size:.9rem;color:var(--moss);font-style:italic}
+
+/* ============ contact ============ */
+.contact{background:var(--forest-2)}
+.contact .overline{color:var(--mist)}
+.contact .oc-arc{color:var(--gold)}
+.contact .sec-title{color:var(--paper)}
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:76px;align-items:start}
+.c-mark{width:46px;height:46px;color:var(--paper);margin-bottom:20px}
+.c-lead{color:var(--mist);line-height:1.78;font-size:.98rem;margin-top:8px}
+.c-lines{margin-top:38px;display:flex;flex-direction:column;gap:15px}
+.c-line{display:flex;gap:14px;align-items:center;color:var(--paper);text-decoration:none;font-size:1rem;transition:color .25s}
+.c-line .ic{width:19px;height:19px;color:var(--gold)}
+a.c-line:hover{color:var(--gold)}
+.c-note{margin-top:30px;display:flex;gap:12px;align-items:flex-start;color:var(--mist);font-size:.88rem;line-height:1.65;max-width:42ch}
+.c-note .ic{color:var(--gold);margin-top:2px}
+.frm-row{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.frm-field{margin-bottom:26px}
+.frm-field label{display:block;font:600 .66rem/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--mist);margin-bottom:11px}
+input,textarea,select{width:100%;background:transparent;border:0;border-bottom:1px solid rgba(237,233,220,.32);border-radius:0;color:var(--paper);font:400 1rem/1.5 var(--sans);padding:10px 2px 12px;transition:border-color .3s}
+textarea{resize:vertical;min-height:96px}
+::placeholder{color:rgba(237,233,220,.38)}
+input:focus,textarea:focus,select:focus{outline:none;border-bottom-color:var(--gold)}
+.bad{border-bottom-color:var(--err)}
+.frm-err{min-height:18px;font-size:.78rem;color:var(--err);margin-top:6px}
+.sel{position:relative}
+.sel select{appearance:none;cursor:pointer}
+.sel select option{color:var(--ink)}
+.sel::after{content:"";position:absolute;right:8px;top:50%;width:8px;height:8px;border-right:1px solid var(--mist);border-bottom:1px solid var(--mist);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{border:1px solid rgba(237,233,220,.35);background:transparent;color:var(--paper);border-radius:999px;padding:10px 17px;font:500 .8rem/1 var(--sans);cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.chip:hover{border-color:var(--gold)}
+.chip.on{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.f-success{color:var(--gold);font-size:.9rem;margin-top:16px}
+@media(max-width:980px){.contact-grid{grid-template-columns:1fr;gap:56px}}
+@media(max-width:560px){.frm-row{grid-template-columns:1fr}}
+
+/* ============ footer ============ */
+.footer{background:var(--forest-3);color:var(--mist);padding:92px 0 34px}
+.f-top-block{display:flex;flex-direction:column;align-items:center;text-align:center;padding-bottom:68px;border-bottom:1px solid var(--line-l)}
+.f-brand-mark{width:86px;height:86px;color:var(--paper)}
+.f-word{font-family:var(--serif);font-weight:600;font-size:2.3rem;color:var(--paper);margin-top:18px;letter-spacing:-.01em}
+.f-word em{font-style:italic;font-weight:500;color:var(--gold)}
+.f-arc{width:230px;margin-top:14px}
+.f-tag{margin-top:22px;font:600 .64rem var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+.f-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:44px;padding:56px 0}
+.f-h{font:600 .64rem var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.f-grid a{display:block;color:var(--mist);text-decoration:none;font-size:.92rem;padding:5px 0;transition:color .25s}
+.f-grid a:hover{color:var(--paper)}
+.f-grid p{font-size:.92rem;line-height:1.7;color:var(--mist)}
+.f-bottom{display:flex;justify-content:space-between;align-items:center;gap:20px;border-top:1px solid var(--line-l);padding-top:26px;font-size:.8rem;flex-wrap:wrap}
+.f-top-link{color:var(--mist);text-decoration:none;display:inline-flex;gap:9px;align-items:center;font:600 .66rem var(--sans);letter-spacing:.18em;text-transform:uppercase;transition:color .25s}
+.f-top-link:hover{color:var(--paper)}
+.f-top-link .ic{transform:rotate(-90deg)}
+@media(max-width:760px){.f-grid{grid-template-columns:1fr;gap:34px;padding:44px 0}.f-top-block{padding-bottom:44px}}
+
+/* ============ toast ============ */
+.toast{position:fixed;left:24px;bottom:24px;z-index:9600;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-left:3px solid var(--gold);box-shadow:0 18px 50px rgba(15,28,19,.28);display:flex;gap:14px;align-items:flex-start;padding:16px 22px 16px 16px;max-width:360px;transform:translateY(150%);opacity:0;transition:transform .5s var(--ease),opacity .5s}
+.toast.show{transform:none;opacity:1}
+.toast .ic{width:20px;height:20px;color:var(--gold-deep);margin-top:1px}
+.toast-title{font:600 .92rem var(--sans)}
+.toast-msg{font-size:.82rem;color:var(--moss);margin-top:3px;line-height:1.5}
+
+/* ============ responsive nav / reduced motion ============ */
+@media(max-width:900px){
+  .nav-links{display:none}
+  .nav .btn{display:none}
+  .lang{margin-left:auto}
+  .nav-burger{display:flex;margin-left:10px}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .ticker-track{animation:none}
+  .cue-line::after{animation:none}
+  .peak-line path{animation:none;stroke-dashoffset:0}
+  .layer,.l-sun,.peak-line{opacity:1;transform:none;transition:none}
+  .reveal,.hl-in,.fade-up,.step-card,.svc-body{transition:none!important}
+  .reveal,.hl-in,.fade-up,.step-card{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- icon sprite -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M12 3C6.6 8.2 5.5 15 12 21c6.5-6 5.4-12.8 0-18Z" fill="currentColor"/></symbol>
+  <symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow-l" viewBox="0 0 24 24"><path d="M20 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m4.5 7.5 7.5 5.5 7.5-5.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a12.5 12.5 0 0 0 5 5L15 13l5 2v4a1.8 1.8 0 0 1-2 1.8A16.5 16.5 0 0 1 3.2 6 1.8 1.8 0 0 1 5 4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div id="progress" aria-hidden="true"></div>
+<div id="cursorDot" aria-hidden="true"></div>
+<div id="cursorRing" aria-hidden="true"><span></span></div>
+
+<!-- ============ nav ============ -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top" aria-label="ColomWhisper — home" data-i18n-attr="aria-label:nav.brandAria">
+      <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M8 37 23.5 10.5 32 21 40.5 10.5 56 37" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M32 21c-5.2-.6-8.6-4.3-8.2-9.6 5.2.6 8.6 4.3 8.2 9.6Z" fill="#55705A"/>
+        <path d="M32 21c5.2-.6 8.6-4.3 8.2-9.6-5.2.6-8.6 4.3-8.2 9.6Z" fill="#8FA588"/>
+        <path d="M14 51c10.6 6.4 25.4 6.4 36 0" fill="none" stroke="#B3873B" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <span class="wordmark">Colom<em>Whisper</em></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services" data-i18n="nav.services">Services</a></li>
+      <li><a href="#method" data-i18n="nav.method">Method</a></li>
+      <li><a href="#results" data-i18n="nav.results">Results</a></li>
+      <li><a href="#engagements" data-i18n="nav.plans">Engagements</a></li>
+      <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+    </ul>
+    <div class="lang" role="group" aria-label="Language" data-i18n-attr="aria-label:nav.langAria">
+      <button class="lang-btn on" type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button class="lang-btn" type="button" data-lang="es" aria-pressed="false">ES</button>
+    </div>
+    <a class="btn btn-solid btn-sm" href="#contact"><span data-i18n="nav.cta">Start a whisper</span></a>
+    <button class="nav-burger" id="menuBtn" aria-expanded="false" aria-label="Toggle menu" data-i18n-attr="aria-label:nav.menuAria"><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- mobile menu -->
+<nav class="menu" id="menu" aria-label="Mobile menu">
+  <a href="#services"><small>01</small><span data-i18n="nav.services">Services</span></a>
+  <a href="#method"><small>02</small><span data-i18n="nav.method">Method</span></a>
+  <a href="#results"><small>03</small><span data-i18n="nav.results">Results</span></a>
+  <a href="#engagements"><small>04</small><span data-i18n="nav.plans">Engagements</span></a>
+  <a href="#contact"><small>05</small><span data-i18n="nav.contact">Contact</span></a>
+  <a class="menu-mail" href="mailto:hello@colomwhisper.studio">hello@colomwhisper.studio</a>
+</nav>
+
+<main>
+<!-- ============ hero ============ -->
+<section class="hero" id="top">
+  <span id="hero-anchor"></span>
+  <div class="hero-scene" aria-hidden="true">
+    <div class="layer l-sun"><div class="layer-in" data-depth="0.16">
+      <svg viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="40" fill="#C9A053"/>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="#C9A053" stroke-width="1.4" opacity=".45"/>
+        <circle cx="60" cy="60" r="62" fill="none" stroke="#C9A053" stroke-width="1.2" opacity=".18"/>
+      </svg>
+    </div></div>
+    <div class="peak-line" data-depth="0.24">
+      <svg viewBox="0 0 260 64">
+        <path d="M6 52 64 12 96 34 128 12 186 44 214 26 254 46" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+      </svg>
+    </div>
+    <div class="layer r1"><div class="layer-in" data-depth="0.3">
+      <svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path d="M0 188 84 162 188 190 318 128 452 182 556 148 688 196 818 138 952 182 1072 132 1198 176 1322 148 1440 178 1440 320 0 320Z" fill="#DBE2CD"/></svg>
+    </div></div>
+    <div class="layer r2"><div class="layer-in" data-depth="0.5">
+      <svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path d="M0 214 104 172 232 206 356 152 492 198 636 158 778 212 902 162 1042 206 1182 158 1306 198 1440 166 1440 320 0 320Z" fill="#B6C6A7"/></svg>
+    </div></div>
+    <div class="layer r3"><div class="layer-in" data-depth="0.75">
+      <svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path d="M0 240 128 188 278 226 432 168 588 220 728 178 878 230 1018 184 1168 226 1306 182 1440 218 1440 320 0 320Z" fill="#8AA384"/></svg>
+    </div></div>
+    <div class="layer r4"><div class="layer-in" data-depth="1.1">
+      <svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path d="M0 262 152 202 318 246 478 188 652 238 812 196 982 248 1142 200 1302 242 1440 206 1440 320 0 320Z" fill="#2E4B37"/></svg>
+    </div></div>
+  </div>
+  <canvas id="leafCanvas" aria-hidden="true"></canvas>
+
+  <div class="hero-inner container">
+    <p class="hero-over fade-up" style="--d:.05s">
+      <svg class="oc-arc" viewBox="0 0 26 12" aria-hidden="true"><path d="M2 9 Q13 2 24 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span data-i18n="hero.over">An advertising studio for small businesses &amp; brands</span>
+    </p>
+    <h1 class="hero-title">
+      <span class="hl"><span class="hl-in" style="--d:.15s" data-i18n="hero.l1">Loud is easy.</span></span>
+      <span class="hl hl-it"><span class="hl-in" style="--d:.28s" data-i18n="hero.l2">We whisper —</span></span>
+      <span class="hl"><span class="hl-in" style="--d:.41s"><span data-i18n="hero.l3pre">and it </span><em class="echo" data-text="echoes" data-i18n="hero.echo" data-i18n-attr="data-text:hero.echo">echoes</em><span data-i18n="hero.l3post">.</span></span></span>
+    </h1>
+    <p class="hero-sub fade-up" style="--d:.55s" data-i18n="hero.sub">ColomWhisper plans, writes, and places advertising for companies and small businesses that would rather be remembered than merely seen. Quiet strategy, sharp creative, measurable echoes.</p>
+    <div class="hero-cta fade-up" style="--d:.7s">
+      <a class="btn btn-solid" href="#contact"><span data-i18n="hero.cta1">Start a whisper</span> <svg class="ic"><use href="#i-arrow-r"/></svg></a>
+      <a class="btn btn-ghost" href="#method"><span data-i18n="hero.cta2">The method</span> <svg class="ic" style="transform:rotate(90deg)"><use href="#i-arrow-r"/></svg></a>
+    </div>
+  </div>
+
+  <div class="scroll-cue" aria-hidden="true">
+    <span data-i18n="hero.cue">Scroll into the valley</span>
+    <span class="cue-line"></span>
+  </div>
+</section>
+
+<!-- ============ ticker ============ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <div class="ticker-group">
+      <span class="tk" data-i18n="ticker.t1">Paid search</span><svg class="tk-leaf" viewBox="0 0 24 24"><use href="#i-leaf"/></svg>
+      <span class="tk" data-i18n="ticker.t2">Social advertising</span><svg class="tk-leaf" viewBox="0 0 24 24"><use href="#i-leaf"/></svg>
+      <span class="tk" data-i18n="ticker.t3">Brand voice</span><svg class="tk-leaf" viewBox="0 0 24 24"><use href="#i-leaf"/></svg>
+      <span class="tk" data-i18n="ticker.t4">Retargeting</span><svg class="tk-leaf" viewBox="0 0 24 24"><use href="#i-leaf"/></svg>
+      <span class="tk" data-i18n="ticker.t5">Geo campaigns</span><svg class="tk-leaf" viewBox="0 0 24 24"><use href="#i-leaf"/></svg>
+      <span class="tk" data-i18n="ticker.t6">Creative direction</span><svg class="tk-leaf" viewBox="0 0 24 24"><use href="#i-leaf"/></svg>
+      <span class="tk" data-i18n="ticker.t7">Newsletters</span><svg class="tk-leaf" viewBox="0 0 24 24"><use href="#i-leaf"/></svg>
+      <span class="tk" data-i18n="ticker.t8">Launch kits</span><svg class="tk-leaf" viewBox="0 0 24 24"><use href="#i-leaf"/></svg>
+      <span class="tk" data-i18n="ticker.t9">SEO content</span><svg class="tk-leaf" viewBox="0 0 24 24"><use href="#i-leaf"/></svg>
+      <span class="tk" data-i18n="ticker.t10">Audience fieldwork</span><svg class="tk-leaf" viewBox="0 0 24 24"><use href="#i-leaf"/></svg>
+    </div>
+  </div>
+</div>
+
+<!-- ============ premise ============ -->
+<section class="section" id="premise">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div>
+        <p class="overline"><svg class="oc-arc" viewBox="0 0 26 12" aria-hidden="true"><path d="M2 9 Q13 2 24 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span data-i18n="pre.over">01 · The premise</span></p>
+        <h2 class="sec-title" data-i18n="pre.title">Why we whisper.</h2>
+      </div>
+    </div>
+    <div class="premise-grid">
+      <p class="statement reveal"><span data-i18n="pre.s1">Attention isn't captured. It's earned — </span><span class="gol" data-i18n="pre.s2">quietly first</span><span data-i18n="pre.s3">, then </span><em data-i18n="pre.s4">everywhere</em><span data-i18n="pre.s5">.</span></p>
+      <div class="premise-side reveal" style="--d:.15s">
+        <p data-i18n="pre.p1">Most agencies shout on your behalf and call the noise results. We start smaller: a phrase only you could say, placed where your people already look, said in a voice they want to keep hearing.</p>
+        <p data-i18n="pre.p2">Then we step back, measure what echoes, prune what doesn't, and let compounding do the loud part. That's the whole method. It just happens to work.</p>
+        <p class="sig" data-i18n="pre.sig">— The ColomWhisper field team</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ services ============ -->
+<section class="section services" id="services">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div>
+        <p class="overline"><svg class="oc-arc" viewBox="0 0 26 12" aria-hidden="true"><path d="M2 9 Q13 2 24 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span data-i18n="svc.over">02 · Services</span></p>
+        <h2 class="sec-title" data-i18n="svc.title">Five practices. One voice.</h2>
+      </div>
+      <p class="sec-note" data-i18n="svc.note">No templates, no recycled decks. Every engagement is blended from these — shaped around your business, not our convenience.</p>
+    </div>
+
+    <div class="svc reveal" data-interest="Strategy">
+      <button class="svc-head" aria-expanded="false">
+        <span class="svc-num">01</span>
+        <span class="svc-title"><span data-i18n="svc1.title">Whisper Strategy</span><span class="svc-tag" data-i18n="svc1.tag">Before we speak, we listen.</span></span>
+        <span class="svc-toggle"><svg class="ic"><use href="#i-plus"/></svg></span>
+      </button>
+      <div class="svc-body"><div class="svc-inner"><div class="svc-inner-pad">
+        <p class="svc-desc" data-i18n="svc1.desc">Positioning and message architecture built from fieldwork, not guesswork. We interview your customers, map your competitive terrain, and find the sentence only your business can honestly say.</p>
+        <ul class="svc-list">
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc1.li1">Positioning &amp; message map</span></li>
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc1.li2">Audience &amp; channel plan</span></li>
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc1.li3">Brand voice guide</span></li>
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc1.li4">90-day echo roadmap</span></li>
+        </ul>
+        <a class="svc-cta" href="#contact" data-interest="Strategy"><span data-i18n="svc.cta">Whisper about this</span> <svg class="ic"><use href="#i-arrow-r"/></svg></a>
+      </div></div></div>
+    </div>
+
+    <div class="svc reveal" style="--d:.06s" data-interest="Paid media">
+      <button class="svc-head" aria-expanded="false">
+        <span class="svc-num">02</span>
+        <span class="svc-title"><span data-i18n="svc2.title">Paid Media, Quietly</span><span class="svc-tag" data-i18n="svc2.tag">Ads that feel like recommendations.</span></span>
+        <span class="svc-toggle"><svg class="ic"><use href="#i-plus"/></svg></span>
+      </button>
+      <div class="svc-body"><div class="svc-inner"><div class="svc-inner-pad">
+        <p class="svc-desc" data-i18n="svc2.desc">Paid search, social, and retargeting built to sit naturally where your audience already is — crafted, tested, and tended weekly like a garden, never set-and-forgotten.</p>
+        <ul class="svc-list">
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc2.li1">Search &amp; shopping campaigns</span></li>
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc2.li2">Meta, TikTok &amp; LinkedIn ads</span></li>
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc2.li3">Retargeting sequences</span></li>
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc2.li4">Weekly tending &amp; plain-language reporting</span></li>
+        </ul>
+        <a class="svc-cta" href="#contact" data-interest="Paid media"><span data-i18n="svc.cta">Whisper about this</span> <svg class="ic"><use href="#i-arrow-r"/></svg></a>
+      </div></div></div>
+    </div>
+
+    <div class="svc reveal" style="--d:.12s" data-interest="Brand &amp; creative">
+      <button class="svc-head" aria-expanded="false">
+        <span class="svc-num">03</span>
+        <span class="svc-title"><span data-i18n="svc3.title">Brand &amp; Creative</span><span class="svc-tag" data-i18n="svc3.tag">A look and a line people repeat.</span></span>
+        <span class="svc-toggle"><svg class="ic"><use href="#i-plus"/></svg></span>
+      </button>
+      <div class="svc-body"><div class="svc-inner"><div class="svc-inner-pad">
+        <p class="svc-desc" data-i18n="svc3.desc">Identity systems, campaign concepts, and copywriting that give your whisper its shape — the part people recognize before they've even read your name.</p>
+        <ul class="svc-list">
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc3.li1">Identity &amp; campaign design</span></li>
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc3.li2">Ad copy &amp; landing pages</span></li>
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc3.li3">Photo &amp; motion art direction</span></li>
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc3.li4">Campaign toolkits</span></li>
+        </ul>
+        <a class="svc-cta" href="#contact" data-interest="Brand &amp; creative"><span data-i18n="svc.cta">Whisper about this</span> <svg class="ic"><use href="#i-arrow-r"/></svg></a>
+      </div></div></div>
+    </div>
+
+    <div class="svc reveal" style="--d:.18s" data-interest="Launch kit">
+      <button class="svc-head" aria-expanded="false">
+        <span class="svc-num">04</span>
+        <span class="svc-title"><span data-i18n="svc4.title">Small-Business Launch Kits</span><span class="svc-tag" data-i18n="svc4.tag">For first sprouts and neighborhood favorites.</span></span>
+        <span class="svc-toggle"><svg class="ic"><use href="#i-plus"/></svg></span>
+      </button>
+      <div class="svc-body"><div class="svc-inner"><div class="svc-inner-pad">
+        <p class="svc-desc" data-i18n="svc4.desc">Everything a small business needs to open loudly while whispering: local campaigns, maps presence, opening creative, and a starter plan that respects a real budget.</p>
+        <ul class="svc-list">
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc4.li1">Local &amp; geo campaigns</span></li>
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc4.li2">Google Business &amp; maps presence</span></li>
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc4.li3">Launch creative &amp; copy</span></li>
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc4.li4">Starter budget plan</span></li>
+        </ul>
+        <a class="svc-cta" href="#contact" data-interest="Launch kit"><span data-i18n="svc.cta">Whisper about this</span> <svg class="ic"><use href="#i-arrow-r"/></svg></a>
+      </div></div></div>
+    </div>
+
+    <div class="svc reveal" style="--d:.24s" data-interest="Content">
+      <button class="svc-head" aria-expanded="false">
+        <span class="svc-num">05</span>
+        <span class="svc-title"><span data-i18n="svc5.title">Content &amp; Field Notes</span><span class="svc-tag" data-i18n="svc5.tag">The organic layer beneath the ads.</span></span>
+        <span class="svc-toggle"><svg class="ic"><use href="#i-plus"/></svg></span>
+      </button>
+      <div class="svc-body"><div class="svc-inner"><div class="svc-inner-pad">
+        <p class="svc-desc" data-i18n="svc5.desc">SEO content, newsletters, and social presence that compound quietly under your paid media — so the echo keeps growing between campaigns.</p>
+        <ul class="svc-list">
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc5.li1">Editorial calendar &amp; SEO content</span></li>
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc5.li2">Newsletter programs</span></li>
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc5.li3">Social management</span></li>
+          <li><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="svc5.li4">Monthly field notes</span></li>
+        </ul>
+        <a class="svc-cta" href="#contact" data-interest="Content"><span data-i18n="svc.cta">Whisper about this</span> <svg class="ic"><use href="#i-arrow-r"/></svg></a>
+      </div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ method ============ -->
+<section class="section method" id="method">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div>
+        <p class="overline"><svg class="oc-arc" viewBox="0 0 26 12" aria-hidden="true"><path d="M2 9 Q13 2 24 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span data-i18n="met.over">03 · The method</span></p>
+        <h2 class="sec-title" data-i18n="met.title">The echo method.</h2>
+      </div>
+      <p class="sec-note" data-i18n="met.note">The same winding road whether you're a family bakery or a fifty-person firm — only the scale changes.</p>
+    </div>
+
+    <div class="method-wrap" id="methodSteps">
+      <svg class="method-path" id="methodSvg" aria-hidden="true"></svg>
+
+      <article class="step">
+        <div class="step-card">
+          <p class="step-phase" data-i18n="met.ph1">Phase 01 · Weeks 1–2</p>
+          <h3 class="step-title" data-i18n="met.t1">Listen</h3>
+          <p class="step-desc" data-i18n="met.d1">We audit your terrain: analytics deep-dives, customer interviews, competitor mapping. Before a single dollar moves, we know what your audience already murmurs about you.</p>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-card">
+          <p class="step-phase" data-i18n="met.ph2">Phase 02 · Weeks 2–4</p>
+          <h3 class="step-title" data-i18n="met.t2">Shape</h3>
+          <p class="step-desc" data-i18n="met.d2">We find the phrase only you can say, build the creative around it, and choose the channels where it will land softest and travel farthest.</p>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-card">
+          <p class="step-phase" data-i18n="met.ph3">Phase 03 · Week 4+</p>
+          <h3 class="step-title" data-i18n="met.t3">Release</h3>
+          <p class="step-desc" data-i18n="met.d3">Campaigns go live in small, measured waves. We watch which whispers travel — and feed the ones that do.</p>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-card">
+          <p class="step-phase" data-i18n="met.ph4">Phase 04 · Ongoing</p>
+          <h3 class="step-title" data-i18n="met.t4">Echo</h3>
+          <p class="step-desc" data-i18n="met.d4">Weekly notes, monthly pruning, budgets reallocated toward whatever echoes loudest. Small gains compound into the loud part.</p>
+        </div>
+      </article>
+
+      <p class="method-end" data-i18n="met.end">…and the echo compounds.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ results ============ -->
+<section class="section results" id="results">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div>
+        <p class="overline"><svg class="oc-arc" viewBox="0 0 26 12" aria-hidden="true"><path d="M2 9 Q13 2 24 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span data-i18n="res.over">04 · Results</span></p>
+        <h2 class="sec-title" data-i18n="res.title">Quiet work, loud numbers.</h2>
+      </div>
+      <p class="sec-note" data-i18n="res.note">Averages across every account we've tended since 2019. We'll happily walk you through the underlying spreadsheets.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat-row reveal">
+        <span class="stat-num"><span class="count" data-target="4.2" data-decimals="1">0</span>×</span>
+        <p class="stat-label" data-i18n="res.stat1">average return on ad spend, across every account we tend</p>
+      </div>
+      <div class="stat-row reveal" style="--d:.08s">
+        <span class="stat-num"><span class="count" data-target="120">0</span>+</span>
+        <p class="stat-label" data-i18n="res.stat2">small businesses and brands guided into fuller voice since 2019</p>
+      </div>
+      <div class="stat-row reveal" style="--d:.16s">
+        <span class="stat-num"><span class="count" data-target="68">0</span>%</span>
+        <p class="stat-label" data-i18n="res.stat3">average cut in wasted spend within the first quarter</p>
+      </div>
+      <div class="stat-row reveal" style="--d:.24s">
+        <span class="stat-num">$<span class="count" data-target="9.4" data-decimals="1">0</span>M</span>
+        <p class="stat-label" data-i18n="res.stat4">in attributed client revenue — and counting</p>
+      </div>
+    </div>
+
+    <div class="evidence">
+      <p class="ev-title reveal" data-i18n="res.evTitle">Field evidence</p>
+      <div class="ev-row reveal">
+        <h3>Verdala Coffee Roasters</h3>
+        <p data-i18n="res.ev1p">A launch whisper for a neighborhood roaster: one voice, one channel, tended weekly.</p>
+        <span class="ev-res" data-i18n="res.ev1r">+212% online orders in 60 days</span>
+      </div>
+      <div class="ev-row reveal" style="--d:.08s">
+        <h3>Fernwood Dental Studio</h3>
+        <p data-i18n="res.ev2p">Geo campaign and a plain-spoken landing page. No discounts, no shouting.</p>
+        <span class="ev-res" data-i18n="res.ev2r">Waiting list full in 11 weeks</span>
+      </div>
+      <div class="ev-row reveal" style="--d:.16s">
+        <h3>Halloway &amp; Sons Outfitters</h3>
+        <p data-i18n="res.ev3p">A forty-year-old brand's first digital flight, delivered in its own weathered voice.</p>
+        <span class="ev-res" data-i18n="res.ev3r">4.7× ROAS on the first flight</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ testimonials ============ -->
+<section class="section" id="words">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div>
+        <p class="overline"><svg class="oc-arc" viewBox="0 0 26 12" aria-hidden="true"><path d="M2 9 Q13 2 24 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span data-i18n="tes.over">05 · Kind words</span></p>
+        <h2 class="sec-title" data-i18n="tes.title">Whispers we've received.</h2>
+      </div>
+    </div>
+
+    <div class="t-block reveal" id="tBlock">
+      <svg class="t-quote" viewBox="0 0 48 36" aria-hidden="true"><path d="M.5 36V20.8C.5 9 6.9 1.8 18.6 0l2 5.6C13 7.6 9.3 11.5 9 17.3h8.4V36H.5Zm27.4 0V20.8C27.9 9 34.3 1.8 46 0l2 5.6c-7.6 2-11.3 5.9-11.6 11.7h8.4V36H27.9Z" fill="currentColor"/></svg>
+      <div class="t-track">
+        <figure class="t-slide active">
+          <blockquote data-i18n="tes.q1">“They told us our customers were already whispering about us — we just needed to join the conversation. Revenue doubled, and our ads finally sound like us.”</blockquote>
+          <figcaption><strong>— Mara Verdala</strong><span data-i18n="tes.c1r">Founder, Verdala Coffee Roasters</span></figcaption>
+        </figure>
+        <figure class="t-slide">
+          <blockquote data-i18n="tes.q2">“No jargon, no shouting, no mystery invoices. Just clear thinking and campaigns that quietly outperformed every agency before them.”</blockquote>
+          <figcaption><strong>— Daniel Halloway</strong><span data-i18n="tes.c2r">Halloway &amp; Sons Outfitters</span></figcaption>
+        </figure>
+        <figure class="t-slide">
+          <blockquote data-i18n="tes.q3">“Our waiting list filled in eleven weeks. I still don't fully understand how. Something about listening first, I'm told.”</blockquote>
+          <figcaption><strong>— Dra. Iris Kellum</strong><span data-i18n="tes.c3r">Fernwood Dental Studio</span></figcaption>
+        </figure>
+      </div>
+      <div class="t-ctrl">
+        <button class="t-btn" id="tPrev" aria-label="Previous testimonial" data-i18n-attr="aria-label:tes.prevAria"><svg class="ic"><use href="#i-arrow-l"/></svg></button>
+        <span class="t-count" id="tCount">01 / 03</span>
+        <button class="t-btn" id="tNext" aria-label="Next testimonial" data-i18n-attr="aria-label:tes.nextAria"><svg class="ic"><use href="#i-arrow-r"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ engagements ============ -->
+<section class="section engage" id="engagements">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div>
+        <p class="overline"><svg class="oc-arc" viewBox="0 0 26 12" aria-hidden="true"><path d="M2 9 Q13 2 24 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span data-i18n="eng.over">06 · Engagements</span></p>
+        <h2 class="sec-title" data-i18n="eng.title">Three ways to grow with us.</h2>
+      </div>
+      <p class="sec-note" data-i18n="eng.note">Priced as monthly retainers, each beginning with a two-week listening sprint. No lock-in beyond sixty days.</p>
+    </div>
+
+    <div class="tier-row reveal">
+      <div class="tier-top">
+        <h3 class="tier-name"><span data-i18n="eng1.name">The Sapling</span></h3>
+        <span class="tier-dots" aria-hidden="true"></span>
+        <span class="tier-price"><span data-i18n="eng1.price">$1,450</span><span class="per" data-i18n="per.month">/mo</span></span>
+      </div>
+      <p class="tier-desc" data-i18n="eng1.desc">For first sprouts. A strategy sprint plus one tended ad channel — usually search or local — just enough to prove the whisper works.</p>
+      <a class="tier-cta" href="#contact" data-interest="Launch kit"><span data-i18n="eng.cta">Begin with a whisper</span> <svg class="ic"><use href="#i-arrow-r"/></svg></a>
+    </div>
+
+    <div class="tier-row reveal" style="--d:.08s">
+      <div class="tier-top">
+        <h3 class="tier-name"><span data-i18n="eng2.name">The Evergreen</span> <span class="tier-badge" data-i18n="eng.badge">Most chosen</span></h3>
+        <span class="tier-dots" aria-hidden="true"></span>
+        <span class="tier-price"><span data-i18n="eng2.price">$3,900</span><span class="per" data-i18n="per.month">/mo</span></span>
+      </div>
+      <p class="tier-desc" data-i18n="eng2.desc">Multi-channel paid media with full creative, monthly pruning, and plain-language reporting. The complete whisper.</p>
+      <a class="tier-cta" href="#contact" data-interest="Paid media"><span data-i18n="eng.cta">Begin with a whisper</span> <svg class="ic"><use href="#i-arrow-r"/></svg></a>
+    </div>
+
+    <div class="tier-row reveal" style="--d:.16s">
+      <div class="tier-top">
+        <h3 class="tier-name"><span data-i18n="eng3.name">The Canopy</span></h3>
+        <span class="tier-dots" aria-hidden="true"></span>
+        <span class="tier-price"><span data-i18n="eng3.price">Custom</span></span>
+      </div>
+      <p class="tier-desc" data-i18n="eng3.desc">Full-funnel advertising for companies ready to grow a canopy: a dedicated team, custom measurement, every channel that earns its place.</p>
+      <a class="tier-cta" href="#contact" data-interest="Strategy"><span data-i18n="eng.cta">Begin with a whisper</span> <svg class="ic"><use href="#i-arrow-r"/></svg></a>
+    </div>
+
+    <p class="tier-note reveal" data-i18n="eng.note2">Every engagement starts with a two-week listening sprint. No lock-in beyond sixty days — ever.</p>
+  </div>
+</section>
+
+<!-- ============ contact ============ -->
+<section class="section contact" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="reveal">
+        <svg class="c-mark" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M8 37 23.5 10.5 32 21 40.5 10.5 56 37" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M32 21c-5.2-.6-8.6-4.3-8.2-9.6 5.2.6 8.6 4.3 8.2 9.6Z" fill="#8FA588"/>
+          <path d="M32 21c5.2-.6 8.6-4.3 8.2-9.6-5.2.6-8.6 4.3-8.2 9.6Z" fill="#CBD5BF"/>
+          <path d="M14 51c10.6 6.4 25.4 6.4 36 0" fill="none" stroke="#B3873B" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <p class="overline"><svg class="oc-arc" viewBox="0 0 26 12" aria-hidden="true"><path d="M2 9 Q13 2 24 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span data-i18n="con.over">07 · Contact</span></p>
+        <h2 class="sec-title" data-i18n="con.title">Whisper to us.</h2>
+        <p class="c-lead" data-i18n="con.lead">Tell us where you are and where you'd rather be. A few honest sentences are plenty — we'll reply within one business day, in plain language, with actual thinking in it.</p>
+        <div class="c-lines">
+          <a class="c-line" href="mailto:hello@colomwhisper.studio"><svg class="ic"><use href="#i-mail"/></svg>hello@colomwhisper.studio</a>
+          <a class="c-line" href="tel:+15550142860"><svg class="ic"><use href="#i-phone"/></svg>+1 (555) 014-2860</a>
+        </div>
+        <p class="c-note"><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="con.note">Prefer talking? We do twenty-minute listening calls — free, no deck, no hard sell.</span></p>
+      </div>
+
+      <form id="whisperForm" class="reveal" style="--d:.12s" novalidate>
+        <div class="frm-row">
+          <div class="frm-field">
+            <label for="fName" data-i18n="form.name">Your name *</label>
+            <input id="fName" type="text" autocomplete="name">
+            <p class="frm-err"></p>
+          </div>
+          <div class="frm-field">
+            <label for="fBiz" data-i18n="form.biz">Business name</label>
+            <input id="fBiz" type="text" autocomplete="organization">
+            <p class="frm-err"></p>
+          </div>
+        </div>
+        <div class="frm-row">
+          <div class="frm-field">
+            <label for="fMail" data-i18n="form.mail">Email *</label>
+            <input id="fMail" type="email" autocomplete="email">
+            <p class="frm-err"></p>
+          </div>
+          <div class="frm-field">
+            <label for="fBudget" data-i18n="form.budget">Monthly budget</label>
+            <div class="sel">
+              <select id="fBudget">
+                <option value="nsy" data-i18n="form.bud1">Not sure yet</option>
+                <option value="u2" data-i18n="form.bud2">Under $2,000</option>
+                <option value="2-5" data-i18n="form.bud3">$2,000 – $5,000</option>
+                <option value="5-15" data-i18n="form.bud4">$5,000 – $15,000</option>
+                <option value="15p" data-i18n="form.bud5">$15,000+</option>
+              </select>
+            </div>
+            <p class="frm-err"></p>
+          </div>
+        </div>
+        <div class="frm-field">
+          <label data-i18n="form.interest">I'm interested in</label>
+          <div class="chips" id="chips">
+            <button type="button" class="chip" data-value="Strategy" data-i18n="form.ch1">Strategy</button>
+            <button type="button" class="chip" data-value="Paid media" data-i18n="form.ch2">Paid media</button>
+            <button type="button" class="chip" data-value="Brand &amp; creative" data-i18n="form.ch3">Brand &amp; creative</button>
+            <button type="button" class="chip" data-value="Launch kit" data-i18n="form.ch4">Launch kit</button>
+            <button type="button" class="chip" data-value="Content" data-i18n="form.ch5">Content</button>
+          </div>
+        </div>
+        <div class="frm-field">
+          <label for="fMsg" data-i18n="form.msg">Your whisper *</label>
+          <textarea id="fMsg" rows="4" placeholder="Where are you now, and where would you rather be?" data-i18n-attr="placeholder:form.ph"></textarea>
+          <p class="frm-err"></p>
+        </div>
+        <button class="btn btn-gold" type="submit" id="fSend"><span class="lbl" data-i18n="form.submit">Send the whisper</span> <svg class="ic"><use href="#i-arrow-r"/></svg></button>
+        <p class="f-success" id="fSuccess" hidden data-i18n="form.success">Received. We'll echo back within one business day.</p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ footer ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="f-top-block">
+      <svg class="f-brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M8 37 23.5 10.5 32 21 40.5 10.5 56 37" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M32 21c-5.2-.6-8.6-4.3-8.2-9.6 5.2.6 8.6 4.3 8.2 9.6Z" fill="#8FA588"/>
+        <path d="M32 21c5.2-.6 8.6-4.3 8.2-9.6-5.2.6-8.6 4.3-8.2 9.6Z" fill="#CBD5BF"/>
+        <path d="M14 51c10.6 6.4 25.4 6.4 36 0" fill="none" stroke="#B3873B" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <p class="f-word">Colom<em>Whisper</em></p>
+      <svg class="f-arc" viewBox="0 0 230 26" aria-hidden="true"><path d="M10 8 C 70 30, 160 30, 220 8" fill="none" stroke="#B3873B" stroke-width="2.6" stroke-linecap="round"/></svg>
+      <p class="f-tag" data-i18n="foot.tag">Planned quietly · Heard widely</p>
+    </div>
+    <div class="f-grid">
+      <div>
+        <p class="f-h" data-i18n="foot.studio">Studio</p>
+        <a href="#services" data-i18n="nav.services">Services</a>
+        <a href="#method" data-i18n="nav.method">The method</a>
+        <a href="#results" data-i18n="nav.results">Results</a>
+        <a href="#engagements" data-i18n="nav.plans">Engagements</a>
+        <a href="#contact" data-i18n="nav.cta">Start a whisper</a>
+      </div>
+      <div>
+        <p class="f-h" data-i18n="foot.reach">Reach us</p>
+        <a href="mailto:hello@colomwhisper.studio">hello@colomwhisper.studio</a>
+        <a href="tel:+15550142860">+1 (555) 014-2860</a>
+      </div>
+      <div>
+        <p class="f-h" data-i18n="foot.where">Where we work</p>
+        <p><span data-i18n="foot.loc1">Remote-first, mountain-anchored.</span><br><span data-i18n="foot.loc2">Monday to Friday, 9:00 – 18:00 EST.</span></p>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <p>© <span id="yr"></span> <span data-i18n="foot.rights">ColomWhisper. All rights reserved.</span></p>
+      <a class="f-top-link" href="#top"><span data-i18n="foot.top">Back to the summit</span> <svg class="ic"><use href="#i-arrow-r"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- toast -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg class="ic"><use href="#i-leaf"/></svg>
+  <div>
+    <p class="toast-title" id="toastTitle">Whisper sent</p>
+    <p class="toast-msg" id="toastMsg"></p>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var qs=function(s,c){return (c||document).querySelector(s);};
+var qsa=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
+var clamp=function(v,a,b){return Math.min(b,Math.max(a,v));};
+var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var fine=window.matchMedia('(pointer: fine)').matches;
+
+/* ============ i18n dictionary ============ */
+var I18N={
+en:{
+  "meta.title":"ColomWhisper — Advertising that whispers, and echoes",
+  "meta.desc":"ColomWhisper — an advertising studio for companies and small businesses. Quiet strategy, sharp creative, measurable echoes.",
+  "nav.services":"Services","nav.method":"Method","nav.results":"Results","nav.plans":"Engagements","nav.contact":"Contact",
+  "nav.cta":"Start a whisper","nav.menuAria":"Toggle menu","nav.brandAria":"ColomWhisper — home","nav.langAria":"Language",
+  "hero.over":"An advertising studio for small businesses & brands",
+  "hero.l1":"Loud is easy.","hero.l2":"We whisper —","hero.l3pre":"and it ","hero.echo":"echoes","hero.l3post":".",
+  "hero.sub":"ColomWhisper plans, writes, and places advertising for companies and small businesses that would rather be remembered than merely seen. Quiet strategy, sharp creative, measurable echoes.",
+  "hero.cta1":"Start a whisper","hero.cta2":"The method","hero.cue":"Scroll into the valley",
+  "ticker.t1":"Paid search","ticker.t2":"Social advertising","ticker.t3":"Brand voice","ticker.t4":"Retargeting",
+  "ticker.t5":"Geo campaigns","ticker.t6":"Creative direction","ticker.t7":"Newsletters","ticker.t8":"Launch kits",
+  "ticker.t9":"SEO content","ticker.t10":"Audience fieldwork",
+  "pre.over":"01 · The premise","pre.title":"Why we whisper.",
+  "pre.s1":"Attention isn't captured. It's earned — ","pre.s2":"quietly first","pre.s3":", then ","pre.s4":"everywhere","pre.s5":".",
+  "pre.p1":"Most agencies shout on your behalf and call the noise results. We start smaller: a phrase only you could say, placed where your people already look, said in a voice they want to keep hearing.",
+  "pre.p2":"Then we step back, measure what echoes, prune what doesn't, and let compounding do the loud part. That's the whole method. It just happens to work.",
+  "pre.sig":"— The ColomWhisper field team",
+  "svc.over":"02 · Services","svc.title":"Five practices. One voice.",
+  "svc.note":"No templates, no recycled decks. Every engagement is blended from these — shaped around your business, not our convenience.",
+  "svc.cta":"Whisper about this",
+  "svc1.title":"Whisper Strategy","svc1.tag":"Before we speak, we listen.",
+  "svc1.desc":"Positioning and message architecture built from fieldwork, not guesswork. We interview your customers, map your competitive terrain, and find the sentence only your business can honestly say.",
+  "svc1.li1":"Positioning & message map","svc1.li2":"Audience & channel plan","svc1.li3":"Brand voice guide","svc1.li4":"90-day echo roadmap",
+  "svc2.title":"Paid Media, Quietly","svc2.tag":"Ads that feel like recommendations.",
+  "svc2.desc":"Paid search, social, and retargeting built to sit naturally where your audience already is — crafted, tested, and tended weekly like a garden, never set-and-forgotten.",
+  "svc2.li1":"Search & shopping campaigns","svc2.li2":"Meta, TikTok & LinkedIn ads","svc2.li3":"Retargeting sequences","svc2.li4":"Weekly tending & plain-language reporting",
+  "svc3.title":"Brand & Creative","svc3.tag":"A look and a line people repeat.",
+  "svc3.desc":"Identity systems, campaign concepts, and copywriting that give your whisper its shape — the part people recognize before they've even read your name.",
+  "svc3.li1":"Identity & campaign design","svc3.li2":"Ad copy & landing pages","svc3.li3":"Photo & motion art direction","svc3.li4":"Campaign toolkits",
+  "svc4.title":"Small-Business Launch Kits","svc4.tag":"For first sprouts and neighborhood favorites.",
+  "svc4.desc":"Everything a small business needs to open loudly while whispering: local campaigns, maps presence, opening creative, and a starter plan that respects a real budget.",
+  "svc4.li1":"Local & geo campaigns","svc4.li2":"Google Business & maps presence","svc4.li3":"Launch creative & copy","svc4.li4":"Starter budget plan",
+  "svc5.title":"Content & Field Notes","svc5.tag":"The organic layer beneath the ads.",
+  "svc5.desc":"SEO content, newsletters, and social presence that compound quietly under your paid media — so the echo keeps growing between campaigns.",
+  "svc5.li1":"Editorial calendar & SEO content","svc5.li2":"Newsletter programs","svc5.li3":"Social management","svc5.li4":"Monthly field notes",
+  "met.over":"03 · The method","met.title":"The echo method.",
+  "met.note":"The same winding road whether you're a family bakery or a fifty-person firm — only the scale changes.",
+  "met.ph1":"Phase 01 · Weeks 1–2","met.t1":"Listen",
+  "met.d1":"We audit your terrain: analytics deep-dives, customer interviews, competitor mapping. Before a single dollar moves, we know what your audience already murmurs about you.",
+  "met.ph2":"Phase 02 · Weeks 2–4","met.t2":"Shape",
+  "met.d2":"We find the phrase only you can say, build the creative around it, and choose the channels where it will land softest and travel farthest.",
+  "met.ph3":"Phase 03 · Week 4+","met.t3":"Release",
+  "met.d3":"Campaigns go live in small, measured waves. We watch which whispers travel — and feed the ones that do.",
+  "met.ph4":"Phase 04 · Ongoing","met.t4":"Echo",
+  "met.d4":"Weekly notes, monthly pruning, budgets reallocated toward whatever echoes loudest. Small gains compound into the loud part.",
+  "met.end":"…and the echo compounds.",
+  "res.over":"04 · Results","res.title":"Quiet work, loud numbers.",
+  "res.note":"Averages across every account we've tended since 2019. We'll happily walk you through the underlying spreadsheets.",
+  "res.stat1":"average return on ad spend, across every account we tend",
+  "res.stat2":"small businesses and brands guided into fuller voice since 2019",
+  "res.stat3":"average cut in wasted spend within the first quarter",
+  "res.stat4":"in attributed client revenue — and counting",
+  "res.evTitle":"Field evidence",
+  "res.ev1p":"A launch whisper for a neighborhood roaster: one voice, one channel, tended weekly.","res.ev1r":"+212% online orders in 60 days",
+  "res.ev2p":"Geo campaign and a plain-spoken landing page. No discounts, no shouting.","res.ev2r":"Waiting list full in 11 weeks",
+  "res.ev3p":"A forty-year-old brand's first digital flight, delivered in its own weathered voice.","res.ev3r":"4.7× ROAS on the first flight",
+  "tes.over":"05 · Kind words","tes.title":"Whispers we've received.",
+  "tes.q1":"“They told us our customers were already whispering about us — we just needed to join the conversation. Revenue doubled, and our ads finally sound like us.”",
+  "tes.q2":"“No jargon, no shouting, no mystery invoices. Just clear thinking and campaigns that quietly outperformed every agency before them.”",
+  "tes.q3":"“Our waiting list filled in eleven weeks. I still don't fully understand how. Something about listening first, I'm told.”",
+  "tes.c1r":"Founder, Verdala Coffee Roasters","tes.c2r":"Halloway & Sons Outfitters","tes.c3r":"Fernwood Dental Studio",
+  "tes.prevAria":"Previous testimonial","tes.nextAria":"Next testimonial",
+  "eng.over":"06 · Engagements","eng.title":"Three ways to grow with us.",
+  "eng.note":"Priced as monthly retainers, each beginning with a two-week listening sprint. No lock-in beyond sixty days.",
+  "eng.badge":"Most chosen","eng.cta":"Begin with a whisper","eng.note2":"Every engagement starts with a two-week listening sprint. No lock-in beyond sixty days — ever.",
+  "eng1.name":"The Sapling","eng1.price":"$1,450",
+  "eng1.desc":"For first sprouts. A strategy sprint plus one tended ad channel — usually search or local — just enough to prove the whisper works.",
+  "eng2.name":"The Evergreen","eng2.price":"$3,900",
+  "eng2.desc":"Multi-channel paid media with full creative, monthly pruning, and plain-language reporting. The complete whisper.",
+  "eng3.name":"The Canopy","eng3.price":"Custom",
+  "eng3.desc":"Full-funnel advertising for companies ready to grow a canopy: a dedicated team, custom measurement, every channel that earns its place.",
+  "per.month":"/mo",
+  "con.over":"07 · Contact","con.title":"Whisper to us.",
+  "con.lead":"Tell us where you are and where you'd rather be. A few honest sentences are plenty — we'll reply within one business day, in plain language, with actual thinking in it.",
+  "con.note":"Prefer talking? We do twenty-minute listening calls — free, no deck, no hard sell.",
+  "form.name":"Your name *","form.biz":"Business name","form.mail":"Email *","form.budget":"Monthly budget",
+  "form.bud1":"Not sure yet","form.bud2":"Under $2,000","form.bud3":"$2,000 – $5,000","form.bud4":"$5,000 – $15,000","form.bud5":"$15,000+",
+  "form.interest":"I'm interested in",
+  "form.ch1":"Strategy","form.ch2":"Paid media","form.ch3":"Brand & creative","form.ch4":"Launch kit","form.ch5":"Content",
+  "form.msg":"Your whisper *","form.ph":"Where are you now, and where would you rather be?",
+  "form.submit":"Send the whisper","form.busy":"Sending quietly…",
+  "form.success":"Received. We'll echo back within one business day.",
+  "form.eName":"Please tell us your name.","form.eMail":"That email doesn't look quite right.","form.eMsg":"Give us at least a sentence to work with.",
+  "foot.tag":"Planned quietly · Heard widely",
+  "foot.studio":"Studio","foot.reach":"Reach us","foot.where":"Where we work",
+  "foot.loc1":"Remote-first, mountain-anchored.","foot.loc2":"Monday to Friday, 9:00 – 18:00 EST.",
+  "foot.rights":"ColomWhisper. All rights reserved.","foot.top":"Back to the summit",
+  "toast.sentT":"Whisper sent","toast.sentM":"We'll echo back within one business day — usually sooner.",
+  "toast.langT":"Language switched","toast.langM":"Now whispering in English."
+},
+es:{
+  "meta.title":"ColomWhisper — Publicidad que susurra, y resuena",
+  "meta.desc":"ColomWhisper — estudio de publicidad para empresas y pequeños negocios. Estrategia silenciosa, creatividad precisa, ecos medibles.",
+  "nav.services":"Servicios","nav.method":"Método","nav.results":"Resultados","nav.plans":"Planes","nav.contact":"Contacto",
+  "nav.cta":"Inicia un susurro","nav.menuAria":"Abrir o cerrar el menú","nav.brandAria":"ColomWhisper — inicio","nav.langAria":"Idioma",
+  "hero.over":"Un estudio de publicidad para pequeños negocios y marcas",
+  "hero.l1":"Gritar es fácil.","hero.l2":"Susurramos —","hero.l3pre":"y ","hero.echo":"resuena","hero.l3post":".",
+  "hero.sub":"ColomWhisper planifica, escribe y coloca publicidad para empresas y pequeños negocios que prefieren ser recordados a simplemente ser vistos. Estrategia silenciosa, creatividad precisa, ecos medibles.",
+  "hero.cta1":"Inicia un susurro","hero.cta2":"El método","hero.cue":"Desciende al valle",
+  "ticker.t1":"Búsqueda pagada","ticker.t2":"Publicidad social","ticker.t3":"Voz de marca","ticker.t4":"Retargeting",
+  "ticker.t5":"Campañas geolocalizadas","ticker.t6":"Dirección creativa","ticker.t7":"Boletines","ticker.t8":"Kits de lanzamiento",
+  "ticker.t9":"Contenido SEO","ticker.t10":"Estudio de audiencias",
+  "pre.over":"01 · La premisa","pre.title":"Por qué susurramos.",
+  "pre.s1":"La atención no se captura. Se gana — ","pre.s2":"primero en silencio","pre.s3":", después ","pre.s4":"en todas partes","pre.s5":".",
+  "pre.p1":"La mayoría de las agencias gritan en tu nombre y llaman resultado a ese ruido. Nosotros empezamos más pequeño: una frase que solo tú podrías decir, colocada donde tu gente ya mira, dicha con una voz que querrán seguir escuchando.",
+  "pre.p2":"Luego damos un paso atrás, medimos qué resuena, podamos lo que no, y dejamos que la acumulación haga la parte ruidosa. Ese es todo el método. Y resulta que funciona.",
+  "pre.sig":"— El equipo de campo de ColomWhisper",
+  "svc.over":"02 · Servicios","svc.title":"Cinco prácticas. Una voz.",
+  "svc.note":"Sin plantillas ni presentaciones recicladas. Cada proyecto se mezcla a partir de estas prácticas, moldeadas alrededor de tu negocio, no de nuestra conveniencia.",
+  "svc.cta":"Susurra sobre esto",
+  "svc1.title":"Estrategia Susurro","svc1.tag":"Antes de hablar, escuchamos.",
+  "svc1.desc":"Posicionamiento y arquitectura de mensaje construidos con trabajo de campo, no con suposiciones. Entrevistamos a tus clientes, mapeamos tu terreno competitivo y encontramos la frase que solo tu negocio puede decir con honestidad.",
+  "svc1.li1":"Posicionamiento y mapa de mensaje","svc1.li2":"Plan de audiencias y canales","svc1.li3":"Guía de voz de marca","svc1.li4":"Hoja de ruta del eco, 90 días",
+  "svc2.title":"Medios Pagados, en Silencio","svc2.tag":"Anuncios que se sienten como recomendaciones.",
+  "svc2.desc":"Búsqueda pagada, social y retargeting diseñados para estar de forma natural donde ya está tu audiencia: creados, probados y atendidos cada semana como un jardín, nunca configurados y olvidados.",
+  "svc2.li1":"Campañas de búsqueda y shopping","svc2.li2":"Anuncios en Meta, TikTok y LinkedIn","svc2.li3":"Secuencias de retargeting","svc2.li4":"Atención semanal e informes en lenguaje claro",
+  "svc3.title":"Marca y Creatividad","svc3.tag":"Una imagen y una frase que la gente repite.",
+  "svc3.desc":"Sistemas de identidad, conceptos de campaña y copywriting que dan forma a tu susurro: la parte que la gente reconoce antes incluso de leer tu nombre.",
+  "svc3.li1":"Diseño de identidad y campañas","svc3.li2":"Copy de anuncios y landing pages","svc3.li3":"Dirección de arte en foto y video","svc3.li4":"Kits de campaña",
+  "svc4.title":"Kits de Lanzamiento para Pequeños Negocios","svc4.tag":"Para primeros brotes y favoritos del barrio.",
+  "svc4.desc":"Todo lo que un pequeño negocio necesita para abrir con presencia mientras susurra: campañas locales, presencia en mapas, creativos de apertura y un plan inicial que respeta un presupuesto real.",
+  "svc4.li1":"Campañas locales y geolocalizadas","svc4.li2":"Google Business y presencia en mapas","svc4.li3":"Creativos y copy de lanzamiento","svc4.li4":"Plan de presupuesto inicial",
+  "svc5.title":"Contenido y Notas de Campo","svc5.tag":"La capa orgánica debajo de los anuncios.",
+  "svc5.desc":"Contenido SEO, boletines y presencia social que se acumulan en silencio bajo tus medios pagados, para que el eco siga creciendo entre campañas.",
+  "svc5.li1":"Calendario editorial y contenido SEO","svc5.li2":"Programas de boletines","svc5.li3":"Gestión de redes sociales","svc5.li4":"Notas de campo mensuales",
+  "met.over":"03 · El método","met.title":"El método del eco.",
+  "met.note":"El mismo camino sinuoso, seas una panadería familiar o una firma de cincuenta personas: solo cambia la escala.",
+  "met.ph1":"Fase 01 · Semanas 1–2","met.t1":"Escuchar",
+  "met.d1":"Auditamos tu terreno: análisis a profundidad de tus datos, entrevistas a clientes y mapeo de la competencia. Antes de mover un solo dólar, sabemos qué murmura ya tu audiencia sobre ti.",
+  "met.ph2":"Fase 02 · Semanas 2–4","met.t2":"Moldear",
+  "met.d2":"Encontramos la frase que solo tú puedes decir, construimos la creatividad a su alrededor y elegimos los canales donde aterrizará con más suavidad y viajará más lejos.",
+  "met.ph3":"Fase 03 · Semana 4+","met.t3":"Liberar",
+  "met.d3":"Las campañas salen al aire en ondas pequeñas y medidas. Observamos qué susurros viajan y alimentamos a los que lo hacen.",
+  "met.ph4":"Fase 04 · Continuo","met.t4":"Eco",
+  "met.d4":"Notas semanales, poda mensual y presupuestos reasignados hacia lo que más resuena. Las ganancias pequeñas se acumulan hasta volverse la parte ruidosa.",
+  "met.end":"…y el eco se multiplica.",
+  "res.over":"04 · Resultados","res.title":"Trabajo silencioso, números ruidosos.",
+  "res.note":"Promedios de todas las cuentas que hemos atendido desde 2019. Con gusto te enseñamos las hojas de cálculo que los respaldan.",
+  "res.stat1":"retorno promedio sobre la inversión publicitaria, en todas las cuentas que atendemos",
+  "res.stat2":"pequeños negocios y marcas guiados hacia una voz más plena desde 2019",
+  "res.stat3":"recorte promedio de gasto desperdiciado dentro del primer trimestre",
+  "res.stat4":"en ingresos atribuidos de clientes — y sigue contando",
+  "res.evTitle":"Evidencia de campo",
+  "res.ev1p":"Un susurro de lanzamiento para una tostadora de barrio: una voz, un canal, cuidado semanal.","res.ev1r":"+212% de pedidos en línea en 60 días",
+  "res.ev2p":"Campaña geolocalizada y una landing page que habla claro. Sin descuentos, sin gritar.","res.ev2r":"Lista de espera llena en 11 semanas",
+  "res.ev3p":"El primer vuelo digital de una marca con cuarenta años, entregado con su propia voz curtida.","res.ev3r":"4,7× ROAS en el primer vuelo",
+  "tes.over":"05 · Palabras amables","tes.title":"Susurros que hemos recibido.",
+  "tes.q1":"“Nos dijeron que nuestros clientes ya hablaban de nosotros a media voz; solo teníamos que unirnos a la conversación. Los ingresos se duplicaron y nuestros anuncios por fin suenan a nosotros.”",
+  "tes.q2":"“Sin jerga, sin gritos, sin facturas misteriosas. Solo pensamiento claro y campañas que, en silencio, superaron a todas las agencias que vinieron antes.”",
+  "tes.q3":"“Nuestra lista de espera se llenó en once semanas. Todavía no entiendo bien cómo. Algo sobre escuchar primero, me dicen.”",
+  "tes.c1r":"Fundadora, Verdala Coffee Roasters","tes.c2r":"Halloway & Sons Outfitters","tes.c3r":"Fernwood Dental Studio",
+  "tes.prevAria":"Testimonio anterior","tes.nextAria":"Testimonio siguiente",
+  "eng.over":"06 · Planes","eng.title":"Tres formas de crecer con nosotros.",
+  "eng.note":"Se cobran como retainers mensuales y cada uno comienza con un sprint de escucha de dos semanas. Sin ataduras más allá de sesenta días.",
+  "eng.badge":"El más elegido","eng.cta":"Empieza con un susurro","eng.note2":"Cada proyecto empieza con un sprint de escucha de dos semanas. Nunca hay ataduras más allá de sesenta días.",
+  "eng1.name":"El Brote","eng1.price":"$1.450",
+  "eng1.desc":"Para primeros brotes. Un sprint de estrategia más un canal de anuncios atendido — normalmente búsqueda o local —, lo justo para comprobar que el susurro funciona.",
+  "eng2.name":"El Perenne","eng2.price":"$3.900",
+  "eng2.desc":"Medios pagados multicanal con creatividad completa, poda mensual e informes en lenguaje claro. El susurro completo.",
+  "eng3.name":"El Dosel","eng3.price":"A medida",
+  "eng3.desc":"Publicidad de embudo completo para empresas listas para crecer un dosel: un equipo dedicado, medición a medida y cada canal que se gane su lugar.",
+  "per.month":"/mes",
+  "con.over":"07 · Contacto","con.title":"Susúrranos.",
+  "con.lead":"Cuéntanos dónde estás y dónde preferirías estar. Unas frases honestas bastan: responderemos en un día hábil, en lenguaje claro y con ideas de verdad adentro.",
+  "con.note":"¿Prefieres hablar? Hacemos llamadas de escucha de veinte minutos: gratis, sin presentación, sin presión.",
+  "form.name":"Tu nombre *","form.biz":"Nombre del negocio","form.mail":"Correo electrónico *","form.budget":"Presupuesto mensual",
+  "form.bud1":"Aún no lo sé","form.bud2":"Menos de $2.000","form.bud3":"$2.000 – $5.000","form.bud4":"$5.000 – $15.000","form.bud5":"Más de $15.000",
+  "form.interest":"Me interesa",
+  "form.ch1":"Estrategia","form.ch2":"Medios pagados","form.ch3":"Marca y creatividad","form.ch4":"Kit de lanzamiento","form.ch5":"Contenido",
+  "form.msg":"Tu susurro *","form.ph":"¿Dónde estás ahora y dónde preferirías estar?",
+  "form.submit":"Envía el susurro","form.busy":"Enviando en silencio…",
+  "form.success":"Recibido. Te responderemos dentro de un día hábil.",
+  "form.eName":"Cuéntanos tu nombre, por favor.","form.eMail":"Ese correo no parece del todo correcto.","form.eMsg":"Danos al menos una frase con la que trabajar.",
+  "foot.tag":"Se planea en silencio · Se escucha en todas partes",
+  "foot.studio":"Estudio","foot.reach":"Escríbenos","foot.where":"Dónde trabajamos",
+  "foot.loc1":"Remotos por defecto, anclados a la montaña.","foot.loc2":"Lunes a viernes, 9:00 – 18:00 EST.",
+  "foot.rights":"ColomWhisper. Todos los derechos reservados.","foot.top":"Volver a la cima",
+  "toast.sentT":"Susurro enviado","toast.sentM":"Te responderemos dentro de un día hábil — normalmente antes.",
+  "toast.langT":"Idioma cambiado","toast.langM":"Ahora susurramos en español."
+}};
+
+/* detect + restore language */
+var lang='en';
+try{
+  var st=null; try{ st=localStorage.getItem('cw-lang'); }catch(e){}
+  if(st==='es'||st==='en'){ lang=st; }
+  else{ lang=((navigator.language||navigator.userLanguage||'en').toLowerCase().indexOf('es')===0)?'es':'en'; }
+}catch(e){}
+
+function t(key){ return (I18N[lang]&&I18N[lang][key])||I18N.en[key]||key; }
+function fmtNum(n,dec){ var s=n.toFixed(dec); if(lang==='es'&&dec>0) s=s.replace('.',','); return s; }
+function refreshCounters(){
+  qsa('.count.counted').forEach(function(el){
+    el.textContent=fmtNum(parseFloat(el.getAttribute('data-target')),parseInt(el.getAttribute('data-decimals')||'0',10));
+  });
+}
+function applyLang(){
+  document.documentElement.setAttribute('lang',lang);
+  document.title=t('meta.title');
+  var md=document.querySelector('meta[name="description"]');
+  if(md) md.setAttribute('content',t('meta.desc'));
+  qsa('[data-i18n]').forEach(function(el){ el.textContent=t(el.getAttribute('data-i18n')); });
+  qsa('[data-i18n-attr]').forEach(function(el){
+    el.getAttribute('data-i18n-attr').split(',').forEach(function(pair){
+      var p=pair.split(':');
+      if(p.length===2) el.setAttribute(p[0].trim(),t(p[1].trim()));
+    });
+  });
+  qsa('.lang-btn').forEach(function(b){
+    var on=b.getAttribute('data-lang')===lang;
+    b.classList.toggle('on',on);
+    b.setAttribute('aria-pressed',on?'true':'false');
+  });
+  refreshCounters();
+}
+
+/* ---------- basics ---------- */
+var yrEl=qs('#yr'); if(yrEl) yrEl.textContent=new Date().getFullYear();
+var loadSet=false;
+function setLoaded(){ if(!loadSet){ loadSet=true; document.body.classList.add('loaded'); } }
+window.addEventListener('load',setLoaded);
+setTimeout(setLoaded,900);
+
+/* duplicate ticker groups for a seamless loop (before translating so clones get translated too) */
+var tkr=qs('.ticker-track');
+if(tkr){ var g=qs('.ticker-group',tkr); for(var i=0;i<3;i++) tkr.appendChild(g.cloneNode(true)); }
+
+/* apply the detected/restored language immediately */
+applyLang();
+
+/* wire the toggle */
+qsa('.lang-btn').forEach(function(b){
+  b.addEventListener('click',function(){
+    if(b.getAttribute('data-lang')===lang) return;
+    lang=b.getAttribute('data-lang');
+    try{ localStorage.setItem('cw-lang',lang); }catch(e){}
+    applyLang();
+    toast(t('toast.langT'),t('toast.langM'));
+  });
+});
+
+/* ---------- nav / scroll progress ---------- */
+var nav=qs('#nav'), bar=qs('#progress');
+function onScroll(){
+  var y=window.scrollY||window.pageYOffset;
+  if(nav) nav.classList.toggle('scrolled', y>30);
+  if(bar){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(h>0? (y/h*100):0)+'%';
+  }
+  methodTick();
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+onScroll();
+
+/* ---------- mobile menu ---------- */
+var menuBtn=qs('#menuBtn');
+if(menuBtn){
+  menuBtn.addEventListener('click',function(){
+    var open=document.body.classList.toggle('menu-open');
+    menuBtn.setAttribute('aria-expanded',open?'true':'false');
+  });
+  qsa('#menu a').forEach(function(a){
+    a.addEventListener('click',function(){
+      document.body.classList.remove('menu-open');
+      menuBtn.setAttribute('aria-expanded','false');
+    });
+  });
+}
+
+/* ---------- reveals ---------- */
+var rObs=new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); rObs.unobserve(e.target); } });
+},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+qsa('.reveal').forEach(function(el){ rObs.observe(el); });
+if(reduced) qsa('.reveal').forEach(function(el){ el.classList.add('in'); });
+
+/* ---------- animated counters (locale-aware) ---------- */
+function runCount(el){
+  var target=parseFloat(el.getAttribute('data-target'));
+  var dec=parseInt(el.getAttribute('data-decimals')||'0',10);
+  if(reduced){ el.textContent=fmtNum(target,dec); el.classList.add('counted'); return; }
+  var t0=performance.now(), dur=1500;
+  (function step(tt){
+    var p=clamp((tt-t0)/dur,0,1), e=1-Math.pow(1-p,3);
+    el.textContent=fmtNum(target*e,dec);
+    if(p<1) requestAnimationFrame(step);
+    else el.classList.add('counted');
+  })(t0);
+}
+var cObs=new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting){ runCount(e.target); cObs.unobserve(e.target); } });
+},{threshold:.5});
+qsa('.count').forEach(function(el){ cObs.observe(el); });
+
+/* ---------- services accordion ---------- */
+var svcs=qsa('.svc');
+svcs.forEach(function(svc){
+  qs('.svc-head',svc).addEventListener('click',function(){
+    var wasOpen=svc.classList.contains('open');
+    svcs.forEach(function(o){ o.classList.remove('open'); qs('.svc-head',o).setAttribute('aria-expanded','false'); });
+    if(!wasOpen){ svc.classList.add('open'); this.setAttribute('aria-expanded','true'); }
+  });
+});
+if(svcs.length){ svcs[0].classList.add('open'); qs('.svc-head',svcs[0]).setAttribute('aria-expanded','true'); }
+
+/* ---------- interest chips + deep links (values stay canonical) ---------- */
+qsa('.chip').forEach(function(ch){ ch.addEventListener('click',function(){ ch.classList.toggle('on'); }); });
+function selectInterest(v){
+  qsa('.chip').forEach(function(ch){ if(ch.getAttribute('data-value')===v) ch.classList.add('on'); });
+}
+qsa('a[data-interest]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    selectInterest(a.getAttribute('data-interest'));
+    var tEl=qs('#contact');
+    if(tEl) tEl.scrollIntoView({behavior:reduced?'auto':'smooth'});
+    setTimeout(function(){ var n=qs('#fName'); if(n) n.focus({preventScroll:true}); },800);
+  });
+});
+
+/* ---------- method path (drawn on scroll) ---------- */
+var mWrap=qs('#methodSteps'), mSvg=qs('#methodSvg');
+var pDraw=null, pLen=0, mNodes=[], nodeDots=[];
+function buildMethod(){
+  if(!mWrap||!mSvg) return;
+  var w=mWrap.clientWidth, h=mWrap.offsetHeight;
+  if(w<10||h<10) return;
+  var desktop=w>860, cx=desktop? w*0.5 : 26;
+  mSvg.setAttribute('viewBox','0 0 '+w+' '+h);
+  mSvg.setAttribute('width',w); mSvg.setAttribute('height',h);
+  mNodes=qsa('.step',mWrap).map(function(el){ return {el:el, y:el.offsetTop+64}; });
+  var amp=desktop? Math.min(90,w*0.07) : 13;
+  var d='M '+cx+' 0', prevY=0;
+  mNodes.forEach(function(n,idx){
+    var off=(idx%2===0?1:-1)*amp, gap=n.y-prevY;
+    d+=' C '+(cx+off)+' '+(prevY+gap*0.55)+' '+(cx+off)+' '+(n.y-gap*0.45)+' '+cx+' '+n.y;
+    prevY=n.y;
+  });
+  d+=' L '+cx+' '+h;
+  var dots=mNodes.map(function(n){ return '<circle class="node" cx="'+cx+'" cy="'+n.y+'" r="7"/>'; }).join('');
+  mSvg.innerHTML='<path class="p-base" d="'+d+'"/><path class="p-draw" d="'+d+'"/>'+dots;
+  pDraw=qs('.p-draw',mSvg);
+  pLen=pDraw.getTotalLength();
+  pDraw.style.strokeDasharray=pLen;
+  pDraw.style.strokeDashoffset=pLen;
+  nodeDots=qsa('.node',mSvg);
+  methodTick();
+}
+function methodTick(){
+  if(!pDraw||!mWrap) return;
+  var r=mWrap.getBoundingClientRect();
+  var p=clamp((window.innerHeight*0.82-r.top)/(r.height+window.innerHeight*0.12),0,1);
+  pDraw.style.strokeDashoffset=pLen*(1-p);
+  mNodes.forEach(function(n,i){
+    var on=n.el.getBoundingClientRect().top < window.innerHeight*0.82;
+    n.el.classList.toggle('on',on);
+    if(nodeDots[i]) nodeDots[i].classList.toggle('on',on);
+  });
+}
+buildMethod();
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(buildMethod);
+window.addEventListener('load',buildMethod);
+
+/* ---------- testimonials ---------- */
+var slides=qsa('.t-slide'), tIdx=0, tTimer=null, tCountEl=qs('#tCount');
+function tShow(i){
+  if(!slides.length) return;
+  tIdx=(i+slides.length)%slides.length;
+  slides.forEach(function(s,k){ s.classList.toggle('active',k===tIdx); });
+  if(tCountEl) tCountEl.textContent='0'+(tIdx+1)+' / 0'+slides.length;
+}
+function tRestart(){
+  if(tTimer) clearInterval(tTimer);
+  if(!reduced) tTimer=setInterval(function(){ tShow(tIdx+1); },6500);
+}
+var tNext=qs('#tNext'), tPrev=qs('#tPrev');
+if(tNext) tNext.addEventListener('click',function(){ tShow(tIdx+1); tRestart(); });
+if(tPrev) tPrev.addEventListener('click',function(){ tShow(tIdx-1); tRestart(); });
+var tBlock=qs('#tBlock');
+if(tBlock){
+  tBlock.addEventListener('mouseenter',function(){ if(tTimer) clearInterval(tTimer); });
+  tBlock.addEventListener('mouseleave',tRestart);
+}
+tRestart();
+
+/* ---------- form ---------- */
+var form=qs('#whisperForm');
+function setErr(input,msg){
+  var f=input.closest('.frm-field');
+  if(f){ var p=qs('.frm-err',f); if(p) p.textContent=msg; }
+  input.classList.toggle('bad',!!msg);
+}
+if(form){
+  qsa('input,textarea',form).forEach(function(inp){
+    inp.addEventListener('input',function(){ if(inp.classList.contains('bad')) setErr(inp,''); });
+  });
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=qs('#fName'), mail=qs('#fMail'), msg=qs('#fMsg'), ok=true;
+    if(name.value.trim().length<2){ setErr(name,t('form.eName')); ok=false; } else setErr(name,'');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail.value.trim())){ setErr(mail,t('form.eMail')); ok=false; } else setErr(mail,'');
+    if(msg.value.trim().length<10){ setErr(msg,t('form.eMsg')); ok=false; } else setErr(msg,'');
+    if(!ok){ var bad=form.querySelector('.bad'); if(bad) bad.focus(); return; }
+    var btn=qs('#fSend'), lbl=qs('.lbl',btn);
+    btn.disabled=true; btn.classList.add('busy'); lbl.textContent=t('form.busy');
+    setTimeout(function(){
+      btn.disabled=false; btn.classList.remove('busy'); lbl.textContent=t('form.submit');
+      form.reset();
+      qsa('.chip.on',form).forEach(function(c){ c.classList.remove('on'); });
+      var s=qs('#fSuccess'); if(s) s.hidden=false;
+      toast(t('toast.sentT'),t('toast.sentM'));
+      setTimeout(function(){ if(s) s.hidden=true; },7000);
+    },1000);
+  });
+}
+
+/* ---------- toast ---------- */
+var toastEl=qs('#toast'), toastTimer=null;
+function toast(title,msgTxt){
+  if(!toastEl) return;
+  qs('#toastTitle').textContent=title;
+  qs('#toastMsg').textContent=msgTxt;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){ toastEl.classList.remove('show'); },5500);
+}
+
+/* ---------- custom cursor ---------- */
+if(fine && !reduced){
+  document.body.classList.add('cursor-on');
+  var dot=qs('#cursorDot'), ringW=qs('#cursorRing');
+  var mx=window.innerWidth/2, my=window.innerHeight/2, rx=mx, ry=my;
+  document.addEventListener('mousemove',function(e){
+    mx=e.clientX; my=e.clientY;
+    if(dot) dot.style.transform='translate('+mx+'px,'+my+'px)';
+  });
+  (function cLoop(){
+    rx+=(mx-rx)*0.16; ry+=(my-ry)*0.16;
+    if(ringW) ringW.style.transform='translate('+rx+'px,'+ry+'px)';
+    requestAnimationFrame(cLoop);
+  })();
+  document.addEventListener('mouseover',function(e){
+    var el=e.target;
+    var inter=el.closest && el.closest('a,button,.chip,.svc-head,select,label,.lang-btn');
+    if(ringW) ringW.classList.toggle('grow',!!inter);
+    var txt=el.closest && el.closest('input,textarea');
+    document.body.classList.toggle('cursor-hide',!!txt);
+  });
+}
+
+/* ---------- hero: mouse parallax + drifting leaves ---------- */
+var heroSec=qs('.hero');
+var parry=heroSec? qsa('.layer-in',heroSec) : [];
+var hx=0, hy=0, tx=0, ty=0;
+var leafM={x:-9999,y:-9999};
+if(heroSec && fine && !reduced){
+  heroSec.addEventListener('mousemove',function(e){
+    var r=heroSec.getBoundingClientRect();
+    hx=((e.clientX-r.left)/r.width-0.5)*2;
+    hy=((e.clientY-r.top)/r.height-0.5)*2;
+    leafM.x=e.clientX-r.left; leafM.y=e.clientY-r.top;
+  });
+  heroSec.addEventListener('mouseleave',function(){ hx=0; hy=0; leafM.x=-9999; leafM.y=-9999; });
+}
+var canvas=qs('#leafCanvas');
+var ctx=canvas? canvas.getContext('2d') : null;
+var LW=0, LH=0, leaves=[], heroOn=true;
+function sizeCanvas(){
+  if(!heroSec||!canvas) return;
+  var r=heroSec.getBoundingClientRect();
+  LW=r.width; LH=r.height;
+  var dpr=Math.min(window.devicePixelRatio||1,2);
+  canvas.width=LW*dpr; canvas.height=LH*dpr;
+  canvas.style.width=LW+'px'; canvas.style.height=LH+'px';
+  if(ctx) ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+var palette=['#55705A','#8FA588','#3E5D4A','#6B8563','#A98A4A'];
+function newLeaf(fromTop){
+  var s=9+Math.random()*10, x=Math.random()*LW;
+  return { ax:x, x:x, y: fromTop? Math.random()*LH : -30-Math.random()*120,
+    s:s, rot:Math.random()*Math.PI*2, rs:(Math.random()-.5)*.012,
+    vy:.22+Math.random()*.42, amp:18+Math.random()*44,
+    ph:Math.random()*Math.PI*2, fr:.25+Math.random()*.5,
+    vx:0, c:palette[(Math.random()*palette.length)|0], a:.4+Math.random()*.45 };
+}
+function initLeaves(){
+  leaves=[];
+  var n=LW<640?10:16;
+  for(var i=0;i<n;i++) leaves.push(newLeaf(true));
+}
+if(heroSec){
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){ heroOn=e.isIntersecting; });
+  },{threshold:0}).observe(heroSec);
+}
+sizeCanvas(); initLeaves();
+function drawLeaf(l){
+  if(!ctx) return;
+  ctx.save();
+  ctx.translate(l.x,l.y);
+  ctx.rotate(l.rot+Math.sin(T*0.8+l.ph)*0.35);
+  ctx.globalAlpha=l.a;
+  ctx.fillStyle=l.c;
+  ctx.beginPath();
+  ctx.moveTo(0,-l.s);
+  ctx.quadraticCurveTo(l.s*.55,0,0,l.s);
+  ctx.quadraticCurveTo(-l.s*.55,0,0,-l.s);
+  ctx.closePath(); ctx.fill();
+  ctx.globalAlpha=l.a*.55;
+  ctx.strokeStyle='rgba(245,241,229,.9)';
+  ctx.lineWidth=.8;
+  ctx.beginPath();
+  ctx.moveTo(0,-l.s*.75);
+  ctx.quadraticCurveTo(l.s*.08,0,0,l.s*.75);
+  ctx.stroke();
+  ctx.restore();
+}
+var last=performance.now(), T=0;
+(function frame(now){
+  requestAnimationFrame(frame);
+  var dt=Math.min(50,now-last); last=now; T+=dt/1000;
+  if(fine && !reduced && parry.length){
+    tx+=(hx-tx)*.05; ty+=(hy-ty)*.05;
+    for(var i=0;i<parry.length;i++){
+      var d=parseFloat(parry[i].getAttribute('data-depth')||'0');
+      parry[i].style.transform='translate3d('+(-tx*d*22).toFixed(2)+'px,'+(-ty*d*8).toFixed(2)+'px,0)';
+    }
+  }
+  if(!reduced && ctx && heroOn && LW>0){
+    ctx.clearRect(0,0,LW,LH);
+    for(var j=0;j<leaves.length;j++){
+      var l=leaves[j];
+      l.y+=l.vy*dt*0.06;
+      l.rot+=l.rs*dt*0.06;
+      var targetX=l.ax+Math.sin(T*l.fr+l.ph)*l.amp;
+      var dx=l.x-leafM.x, dy=l.y-leafM.y, dd=Math.sqrt(dx*dx+dy*dy);
+      if(dd<120 && dd>0.01){
+        var f=(1-dd/120)*1.4;
+        l.vx+=(dx/dd)*f;
+        l.y+=(dy/dd)*f*.6;
+      }
+      l.vx*=.92;
+      l.x+=(targetX-l.x)*.03+l.vx;
+      if(l.y>LH+40||l.x<-60||l.x>LW+60){ leaves[j]=newLeaf(false); }
+      drawLeaf(leaves[j]);
+    }
+  }
+})(last);
+
+/* ---------- resize ---------- */
+var rzT=null;
+window.addEventListener('resize',function(){
+  clearTimeout(rzT);
+  rzT=setTimeout(function(){ sizeCanvas(); initLeaves(); buildMethod(); },220);
+});
+})();
+</script>
+</body>
+</html>
