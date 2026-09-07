@@ -820,57 +820,7 @@ input:focus,textarea:focus,select:focus{outline:none;border-bottom-color:var(--g
         <p class="c-note"><svg class="ic"><use href="#i-leaf"/></svg><span data-i18n="con.note">Prefer talking? We do twenty-minute listening calls — free, no deck, no hard sell.</span></p>
       </div>
 
-      <form id="whisperForm" class="reveal" style="--d:.12s" novalidate>
-        <div class="frm-row">
-          <div class="frm-field">
-            <label for="fName" data-i18n="form.name">Your name *</label>
-            <input id="fName" type="text" autocomplete="name">
-            <p class="frm-err"></p>
-          </div>
-          <div class="frm-field">
-            <label for="fBiz" data-i18n="form.biz">Business name</label>
-            <input id="fBiz" type="text" autocomplete="organization">
-            <p class="frm-err"></p>
-          </div>
-        </div>
-        <div class="frm-row">
-          <div class="frm-field">
-            <label for="fMail" data-i18n="form.mail">Email *</label>
-            <input id="fMail" type="email" autocomplete="email">
-            <p class="frm-err"></p>
-          </div>
-          <div class="frm-field">
-            <label for="fBudget" data-i18n="form.budget">Monthly budget</label>
-            <div class="sel">
-              <select id="fBudget">
-                <option value="nsy" data-i18n="form.bud1">Not sure yet</option>
-                <option value="u2" data-i18n="form.bud2">Under $2,000</option>
-                <option value="2-5" data-i18n="form.bud3">$2,000 – $5,000</option>
-                <option value="5-15" data-i18n="form.bud4">$5,000 – $15,000</option>
-                <option value="15p" data-i18n="form.bud5">$15,000+</option>
-              </select>
-            </div>
-            <p class="frm-err"></p>
-          </div>
-        </div>
-        <div class="frm-field">
-          <label data-i18n="form.interest">I'm interested in</label>
-          <div class="chips" id="chips">
-            <button type="button" class="chip" data-value="Strategy" data-i18n="form.ch1">Strategy</button>
-            <button type="button" class="chip" data-value="Paid media" data-i18n="form.ch2">Paid media</button>
-            <button type="button" class="chip" data-value="Brand &amp; creative" data-i18n="form.ch3">Brand &amp; creative</button>
-            <button type="button" class="chip" data-value="Launch kit" data-i18n="form.ch4">Launch kit</button>
-            <button type="button" class="chip" data-value="Content" data-i18n="form.ch5">Content</button>
-          </div>
-        </div>
-        <div class="frm-field">
-          <label for="fMsg" data-i18n="form.msg">Your whisper *</label>
-          <textarea id="fMsg" rows="4" placeholder="Where are you now, and where would you rather be?" data-i18n-attr="placeholder:form.ph"></textarea>
-          <p class="frm-err"></p>
-        </div>
-        <button class="btn btn-gold" type="submit" id="fSend"><span class="lbl" data-i18n="form.submit">Send the whisper</span> <svg class="ic"><use href="#i-arrow-r"/></svg></button>
-        <p class="f-success" id="fSuccess" hidden data-i18n="form.success">Received. We'll echo back within one business day.</p>
-      </form>
+      
     </div>
   </div>
 </section>
